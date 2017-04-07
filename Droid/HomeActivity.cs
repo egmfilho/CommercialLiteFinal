@@ -12,7 +12,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace CommercialLite.Droid
+namespace CommercialLiteFinal.Droid
 {
 	[Activity(Label = "HomeActivity")]
 	public class HomeActivity : Activity

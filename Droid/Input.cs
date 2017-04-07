@@ -4,7 +4,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Widget;
 
-namespace CommercialLite.Droid
+namespace CommercialLiteFinal.Droid
 {
 	[Register("CommercialLite.Droid.Input")]
 	public class Input : EditText

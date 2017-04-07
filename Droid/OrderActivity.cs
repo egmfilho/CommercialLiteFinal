@@ -7,7 +7,7 @@ using Android.OS;
 using Android.Preferences;
 using Android.Widget;
 
-namespace CommercialLite.Droid
+namespace CommercialLiteFinal.Droid
 {
 	[Activity(Label = "OrderActivity")]
 	public class OrderActivity : Activity

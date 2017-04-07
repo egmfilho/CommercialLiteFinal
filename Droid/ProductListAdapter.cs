@@ -2,7 +2,7 @@
 using Android.Views;
 using Android.Widget;
 
-namespace CommercialLite.Droid
+namespace CommercialLiteFinal.Droid
 {
 	public class ProductListAdapter : BaseAdapter<Produto>
 	{

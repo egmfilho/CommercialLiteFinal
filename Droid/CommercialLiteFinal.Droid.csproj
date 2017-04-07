@@ -42,6 +42,18 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.23.0.1.3\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Mobile.Core">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\ZXing.Net.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.portable">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\zxing.portable.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXingNetMobile">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.47\lib\MonoAndroid403\ZXingNetMobile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommercialLiteFinal\CommercialLiteFinal.csproj">
@@ -50,23 +62,70 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomerListAdapter.cs" />
+    <Compile Include="CustomerSearchActivity.cs" />
+    <Compile Include="ExportListActivity.cs" />
+    <Compile Include="ExportListAdapter.cs" />
+    <Compile Include="HomeActivity.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="ItemActivity.cs" />
+    <Compile Include="ItemListAdapter.cs" />
+    <Compile Include="OrderActivity.cs" />
+    <Compile Include="OrderItemsActivity.cs" />
+    <Compile Include="ProductListAdapter.cs" />
+    <Compile Include="ProductSearchActivity.cs" />
+    <Compile Include="Resources\layout\LogoutActivity.cs" />
+    <Compile Include="Properties\MainActivity.cs">
+      <Link>MainActivity.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
-    <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\mipmap-hdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\drawable\barcode.png" />
+    <AndroidResource Include="Resources\drawable\edit.png" />
+    <AndroidResource Include="Resources\drawable\history.png" />
+    <AndroidResource Include="Resources\drawable\list.png" />
+    <AndroidResource Include="Resources\drawable\logout.png" />
+    <AndroidResource Include="Resources\drawable\button_bg_squared.xml" />
+    <AndroidResource Include="Resources\drawable\circle_edit.png" />
+    <AndroidResource Include="Resources\drawable\edittext_bg.xml" />
+    <AndroidResource Include="Resources\drawable\logo_nome_branco.png" />
+    <AndroidResource Include="Resources\layout\Main.axml" />
+    <AndroidResource Include="Resources\layout\Home.axml" />
+    <AndroidResource Include="Resources\layout\export_list_row_item.axml" />
+    <AndroidResource Include="Resources\layout\Order.axml" />
+    <AndroidResource Include="Resources\layout\ExportList.axml" />
+    <AndroidResource Include="Resources\layout\Item.axml" />
+    <AndroidResource Include="Resources\layout\item_list_row_item.axml" />
+    <AndroidResource Include="Resources\layout\ProductSearch.axml" />
+    <AndroidResource Include="Resources\layout\customer_list_row_item.axml" />
+    <AndroidResource Include="Resources\layout\CustomerSearch.axml" />
+    <AndroidResource Include="Resources\layout\OrderItems.axml" />
+    <AndroidResource Include="Resources\menu\product_search_options_menu.xml" />
+    <AndroidResource Include="Resources\menu\order_options_menu.xml" />
+    <AndroidResource Include="Resources\menu\item_options_menu.xml" />
+    <AndroidResource Include="Resources\menu\options_menu.xml" />
+    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\values-v21\style.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable\" />
+    <Folder Include="Resources\layout\" />
+    <Folder Include="Resources\menu\" />
+    <Folder Include="Resources\values\" />
+    <Folder Include="Resources\values-v21\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

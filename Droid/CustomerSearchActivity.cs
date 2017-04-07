@@ -6,7 +6,7 @@ using Android.OS;
 using Android.Preferences;
 using Android.Widget;
 
-namespace CommercialLite.Droid
+namespace CommercialLiteFinal.Droid
 {
 	[Activity(Label = "CustomerSearchActivity")]
 	public class CustomerSearchActivity : Activity

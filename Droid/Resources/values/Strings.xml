@@ -1,5 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="hello">Hello World, Click Me!</string>
-	<string name="app_name">CommercialLiteFinal.Droid</string>
+	<string name="app_name">CommercialLite.Droid</string>
+	<string name="home">Início</string>
+	<string name="product_title">Produto</string>
+	<string name="product_search_title">Pesquisar produtos</string>
+	<string name="product_search_placeholder">Código ou descrição</string>
+	<string name="customer_search_placeholder">Nome ou código</string>
+	<string name="customer_search_title">Buscar cliente</string>
+	<string name="export_list_title">Exportados</string>
+	<string name="search">Buscar</string>
+	<string name="scan">Escanear</string>
+	<string name="add">Adicionar</string>
+	<string name="view">Ver</string>
+	<string name="view_all">Ver todos</string>
+	<string name="remove">Remover</string>
+	<string name="order">Orçamento</string>
+	<string name="order_items">Lista de produtos</string>
+	<string name="new_">Novo</string>
+	<string name="new_order">Novo orçamento</string>
+	<string name="save">Salvar</string>
+	<string name="add_product">Adicionar produto</string>
+	<string name="add_to_order">Adicionar ao pedido</string>
+	<string name="view_products">Ver produtos</string>
+	<string name="add_customer">Adicionar cliente</string>
+	<string name="remove_customer">Remover cliente</string>
+	<string name="notes">Observações</string>
+	<string name="add_payment">Adicionar pagamento</string>
+	<string name="discount">Desconto</string>	
+	<string name="discount_hint">Informe o desconto</string>
+	<string name="discount_al">Alíquota %</string>
+	<string name="discount_vl">Valor R$</string>
+	<string name="apply_discount">Aplicar desconto</string>	
+	<string name="export">Exportar</string>
+	<string name="finalize">Finalizar</string>
+	<string name="login">Entrar</string>
+	<string name="logout">Sair</string>
 </resources>

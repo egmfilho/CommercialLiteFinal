@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace CommercialLite
+namespace CommercialLiteFinal
 {
 	public class Pedido
 	{

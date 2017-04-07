@@ -7,7 +7,7 @@ using Android.Preferences;
 using Android.Widget;
 using ZXing.Mobile;
 
-namespace CommercialLite.Droid
+namespace CommercialLiteFinal.Droid
 {
 	[Activity(Label = "ProductSearchActivity")]
 	public class ProductSearchActivity : Activity

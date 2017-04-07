@@ -1,5 +1,5 @@
-using System;
-namespace CommercialLite
+﻿using System;
+namespace CommercialLiteFinal
 {
 	public class Pessoa
 	{

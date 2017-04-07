@@ -1,5 +1,5 @@
 ﻿using System;
-namespace CommercialLite
+namespace CommercialLiteFinal
 {
 	public class Login
 	{
