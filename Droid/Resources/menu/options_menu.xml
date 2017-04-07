@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">  
+    <!--///showAsAction="always" ///-->  
+    <item android:id="@+id/menu_novo1" android:title="Novo" showAsAction="always" />  
+    <item android:id="@+id/menu_exportar1" android:title="Exportar" showAsAction="always" />  
+    <item android:id="@+id/menu_logout" android:title="Logout" showAsAction="always" />  
+    <!--/android:showAsAction="ifRoom"/-->  
+    <item android:id="@+id/menu_novo2" android:textColor="#ffffffff" android:title="Novo" android:showAsAction="ifRoom" />  
+    <item android:id="@+id/menu_exportar2" android:textColor="#ffffffff" android:title="Exportar" android:showAsAction="ifRoom" />   
+</menu> 

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<resources>
+	<color name="main">#178DC9</color>
+	<color name="dark">#0e5376</color>
+	<color name="text">#0e5376</color>
+	<color name="accent">#178DC9</color>
+	<color name="background">#e5e5e5</color>
+	<color name="borderColor">#10000000</color>
+	
+	<style name="Tema.Commercial" parent="android:Theme.Material.Light.NoActionBar">		
+		<item name="android:colorPrimary">@color/main</item>
+		<item name="android:colorPrimaryDark">@color/dark</item>
+		<item name="android:textColorPrimary">@color/text</item>
+		<item name="android:colorAccent">@color/accent</item>
+		<item name="android:button">@style/Button.Primary</item>
+<!--		<item name="android:colorControlNormal">#ffffff</item>-->
+<!--		<item name="android:textColorSecondary">#ff0000</item>-->
+	</style>
+
+	<style name="Tema.Commercial.Escuro" parent="android:Theme.Material.NoActionBar">		
+		<item name="android:colorPrimary">@color/main</item>
+		<item name="android:colorPrimaryDark">@color/dark</item>
+		<item name="android:textColorPrimary">#ffffff</item>
+		<item name="android:colorAccent">#ffffff</item>
+		<item name="android:button">@style/Button.Light</item>
+	</style>
+	
+	<style name="Text.White" parent="android:style/TextAppearance">
+		<item name="android:textColor">#FFFFFF</item>
+	</style>
+
+	<style name="Text.Primary" parent="android:style/TextAppearance">
+		<item name="android:textColor">@color/main</item>
+	</style>
+
+	<style name="Button.Primary" parent="">
+		<item name="android:backgroundTint">@color/main</item>
+		<item name="android:textColor">#FFFFFF</item>
+		<item name="android:textSize">15sp</item>
+	</style>
+
+	<style name="Button.Light" parent="">
+		<item name="android:backgroundTint">#eeeeee</item>
+		<item name="android:textColor">@color/main</item>
+		<item name="android:textSize">15sp</item>
+	</style>
+
+	<style name="Spinner.Primary" parent="">
+		<item name="android:colorControlNormal">@color/main</item>
+	</style>
+	
+</resources>	
