@@ -230,22 +230,50 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/descontos">
-                        <CommercialLite.Droid.Input
-                            android:inputType="numberDecimal"
-                            android:id="@+id/txtAliquota"
-                            android:hint="@string/discount_al"
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:minWidth="25px"
+                            android:minHeight="25px"
+                            android:id="@+id/linearLayout10"
                             android:layout_width="0px"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center" />
-                        <CommercialLite.Droid.Input
-                            android:inputType="numberDecimal"
-                            android:id="@+id/txtVlDesc"
-                            android:hint="@string/discount_vl"
+                            android:layout_weight="1">
+                            <CommercialLite.Droid.Input
+                                android:inputType="numberDecimal"
+                                android:id="@+id/txtAliquota"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView4"
+                                android:gravity="center"
+                                android:text="@string/discount_al" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:minWidth="25px"
+                            android:minHeight="25px"
+                            android:id="@+id/linearLayout11"
                             android:layout_width="0px"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center" />
+                            android:layout_weight="1">
+                            <CommercialLite.Droid.Input
+                                android:inputType="numberDecimal"
+                                android:id="@+id/txtVlDesc"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:text="@string/discount_vl"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView5"
+                                android:gravity="center" />
+                        </LinearLayout>
                     </LinearLayout>
                     <TextView
                         android:textAppearance="?android:attr/textAppearanceSmall"

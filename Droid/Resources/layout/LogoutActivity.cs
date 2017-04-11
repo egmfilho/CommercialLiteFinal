@@ -34,13 +34,14 @@ namespace CommercialLiteFinal.Droid
 					{
 						ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
 						ISharedPreferencesEditor editor = prefs.Edit();
-						var username = prefs.GetString("username", "");
-						editor.Clear();
-						editor.PutString("username", username);
+						var user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
+						editor.Remove("user");
+						editor.PutString("user", Serializador.ToXML(new Usuario { UserName = user.UserName }));
 						editor.Commit();
-						var intent = new Intent(this, typeof(MainActivity));
+						var intent = new Intent(this, typeof(LoginActivity));
 						intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
 						StartActivity(intent);
+						Finish();
 					}
 					//else
 					//{

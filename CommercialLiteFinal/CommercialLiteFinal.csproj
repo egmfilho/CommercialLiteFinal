@@ -42,6 +42,10 @@
     <Compile Include="Models\Loja.cs" />
     <Compile Include="Models\Vendedor.cs" />
     <Compile Include="Models\Cep.cs" />
+    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\Autenticacao.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="Helper\Conversor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

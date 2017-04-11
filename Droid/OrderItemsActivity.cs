@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace CommercialLiteFinal.Droid
 {
-	[Activity(Label = "OrderItemsActivity")]
+	[Activity(Label = "OrderItemsActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
 	public class OrderItemsActivity : Activity
 	{
 		protected override void OnCreate(Bundle savedInstanceState)

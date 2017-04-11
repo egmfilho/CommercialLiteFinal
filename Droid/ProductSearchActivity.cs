@@ -9,11 +9,10 @@ using ZXing.Mobile;
 
 namespace CommercialLiteFinal.Droid
 {
-	[Activity(Label = "ProductSearchActivity")]
+	[Activity(Label = "ProductSearchActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
 	public class ProductSearchActivity : Activity
 	{
-		string token;
-		string idPreco;
+		Usuario user;
 
 		List<Produto> arrayProdutos = new List<Produto>();
 		ListView listView;
@@ -23,8 +22,7 @@ namespace CommercialLiteFinal.Droid
 		{
 			base.OnCreate(savedInstanceState);
 
-			token = PreferenceManager.GetDefaultSharedPreferences(this).GetString("token", "");
-			idPreco = PreferenceManager.GetDefaultSharedPreferences(this).GetString("priceId", "");
+			user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
 
 			MobileBarcodeScanner.Initialize(Application);
 			SetContentView(Resource.Layout.ProductSearch);
@@ -92,7 +90,7 @@ namespace CommercialLiteFinal.Droid
 				long codigo;
 				if (long.TryParse(query, out codigo))
 				{
-					var res = Request.GetInstance().Post<Produto>("product", "get", token, new HttpParam("CdProduto", query), new HttpParam("price_id", idPreco));
+					var res = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", query), new HttpParam("price_id", user.PriceId));
 					status = res.status;
 
 					if (status.code == 401)
@@ -102,7 +100,7 @@ namespace CommercialLiteFinal.Droid
 				}
 				else
 				{
-					var res = Request.GetInstance().Post<List<Produto>>("product", "getList", token, new HttpParam("NmProduto", query), new HttpParam("price_id", idPreco));
+					var res = Request.GetInstance().Post<List<Produto>>("product", "getList", user.Token, new HttpParam("NmProduto", query), new HttpParam("price_id", user.PriceId));
 					status = res.status;
 
 					if (status.code == 401)

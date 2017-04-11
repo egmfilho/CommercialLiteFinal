@@ -36,4 +36,7 @@
 	<string name="finalize">Finalizar</string>
 	<string name="login">Entrar</string>
 	<string name="logout">Sair</string>
+	<string name="unlock_device">Desbloquear aparelho</string>
+	<string name="locked_device">Aparelho bloqueado</string>
+	<string name="locked_message">Este aparelho ainda não foi liberado para uso do Commercial Lite.</string>
 </resources>

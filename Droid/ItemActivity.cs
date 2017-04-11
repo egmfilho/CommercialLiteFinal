@@ -9,10 +9,10 @@ using Android.Widget;
 
 namespace CommercialLiteFinal.Droid
 {
-	[Activity(Label = "ItemActivity")]
+	[Activity(Label = "ItemActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
 	public class ItemActivity : Activity
 	{
-		string token;
+		Usuario user;
 
 		ItemPedido item = new ItemPedido();
 		string action;
@@ -25,10 +25,10 @@ namespace CommercialLiteFinal.Droid
 			// Create your application here
 			SetContentView(Resource.Layout.Item);
 
-			token = PreferenceManager.GetDefaultSharedPreferences(this).GetString("token", "");
+			user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
 
 			action = this.Intent.GetStringExtra("action");
-			maxDiscount = (decimal)PreferenceManager.GetDefaultSharedPreferences(this).GetFloat("maxDiscount", 0);
+			maxDiscount = (decimal)user.MaxDiscount;
 
 			Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
 			toolbar.InflateMenu(Resource.Menu.item_options_menu);
@@ -56,7 +56,7 @@ namespace CommercialLiteFinal.Droid
 						alert.SetPositiveButton("Sim", (s, v) => 
 						{
 							action = "remove";
-							Confirm();	
+							Confirm();
 						});
 						alert.SetNegativeButton("Não",(s, v) => { });
 						alert.Show();
@@ -76,10 +76,8 @@ namespace CommercialLiteFinal.Droid
 			qtd.ClearFocus();
 			qtd.Text = item.Quantidade.ToString("0.00");
 			qtd.TextChanged += (object sender, Android.Text.TextChangedEventArgs e) => 
-			{
-				int x = 1;
-				int.TryParse(e.Text.ToString(), out x);
-				item.Quantidade = x;
+			{				
+				item.Quantidade = Conversor.StringToDecimal(e.Text.ToString(), 1);
 				total.Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", item.ValorTotal);
 				UpdateScreen();
 			};
@@ -109,9 +107,7 @@ namespace CommercialLiteFinal.Droid
 				e.Handled = false;
 				if (e.ActionId == Android.Views.InputMethods.ImeAction.Done)
 				{
-					decimal desconto;
-					if (!decimal.TryParse(txtAl.Text, out desconto))
-						desconto = 0;
+					decimal desconto = Conversor.StringToDecimal(txtAl.Text, 0);
 
 					if (desconto > maxDiscount)
 					{
@@ -140,9 +136,7 @@ namespace CommercialLiteFinal.Droid
 				if (e.ActionId == Android.Views.InputMethods.ImeAction.Done)
 				{
 					var maxValue = item.ValorTotal * (maxDiscount / 100);
-					decimal desconto;
-					if (!decimal.TryParse(txtVl.Text, out desconto))
-						desconto = 0;
+					decimal desconto = Conversor.StringToDecimal(txtVl.Text, 0);
 
 					if (desconto > maxValue)
 					{
@@ -185,7 +179,7 @@ namespace CommercialLiteFinal.Droid
 						var t = new Thread(new ThreadStart(delegate
 						{
 							var c = this.Intent.GetStringExtra("productCode");
-							item.SetProduto(Request.GetInstance().Post<Produto>("product", "get", token, new HttpParam("CdProduto", c), new HttpParam("price_id", "00A0000001")).data);
+							item.SetProduto(Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", c), new HttpParam("price_id", "00A0000001")).data);
 
 							RunOnUiThread(() =>
 							{
@@ -227,8 +221,8 @@ namespace CommercialLiteFinal.Droid
 			FindViewById<TextView>(Resource.Id.lblValor).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor unitário {0:C}", item.Produto.VlPreco);
 			FindViewById<TextView>(Resource.Id.lblQtdEstoque).Text = "Quantidade em estoque: " + item.Produto.QtEstoque.ToString();
 			FindViewById<TextView>(Resource.Id.lblValorTotal).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", item.ValorTotal);
-			FindViewById<EditText>(Resource.Id.txtAliquota).Text = item.DescontoPercent == 0 ? "" : item.DescontoPercent.ToString("0.00");
-			FindViewById<EditText>(Resource.Id.txtVlDesc).Text = item.DescontoDinheiro == 0 ? "" : item.DescontoDinheiro.ToString("0.00");
+			FindViewById<EditText>(Resource.Id.txtAliquota).Text = item.DescontoPercent.ToString("0.00");
+			FindViewById<EditText>(Resource.Id.txtVlDesc).Text = item.DescontoDinheiro.ToString("0.00");
 			FindViewById<TextView>(Resource.Id.lblDesconto).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor total: {0:C}", item.ValorTotalComDesconto);
 		}
 

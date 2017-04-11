@@ -14,10 +14,10 @@ using Android.Widget;
 
 namespace CommercialLiteFinal.Droid
 {		
-	[Activity(Label = "ExportActivity")]
+	[Activity(Label = "ExportActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
 	public class ExportListActivity : Activity
 	{
-		string token;
+		Usuario user;
 
 		List<Pedido> array;
 		ListView lista;
@@ -29,7 +29,7 @@ namespace CommercialLiteFinal.Droid
 			// Create your application here
 			SetContentView(Resource.Layout.ExportList);
 
-			token = PreferenceManager.GetDefaultSharedPreferences(this).GetString("token", "");
+			user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
 
 			lista = FindViewById<ListView>(Resource.Id.listaExportados);
 
@@ -43,7 +43,7 @@ namespace CommercialLiteFinal.Droid
 			{
 				string idUsuario = PreferenceManager.GetDefaultSharedPreferences(this).GetInt("userId", 0).ToString();
 
-				var res = Request.GetInstance().Post<List<Pedido>>("order", "getList", token, new HttpParam("order_user_id", idUsuario), new HttpParam("order_limit", "20"));
+				var res = Request.GetInstance().Post<List<Pedido>>("order", "getList", user.Token, new HttpParam("order_user_id", idUsuario), new HttpParam("order_limit", "20"));
 
 				RunOnUiThread(() =>
 				{					

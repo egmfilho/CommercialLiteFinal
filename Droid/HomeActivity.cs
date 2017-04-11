@@ -14,7 +14,7 @@ using Android.Widget;
 
 namespace CommercialLiteFinal.Droid
 {
-	[Activity(Label = "HomeActivity")]
+	[Activity(Label = "HomeActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
 	public class HomeActivity : Activity
 	{
 		protected override void OnCreate(Bundle savedInstanceState)
@@ -54,6 +54,8 @@ namespace CommercialLiteFinal.Droid
 
 			FindViewById<TextView>(Resource.Id.lblVendedor).Text = PreferenceManager.GetDefaultSharedPreferences(this).GetString("employeeName", "");
 			FindViewById<TextView>(Resource.Id.lblVersao).Text = "versão 0.9";
+			if (Request.GetInstance().Uri.Equals(Database.Teste))
+				FindViewById<TextView>(Resource.Id.lblVersao).Text += " BASE TESTE";
 		}
 	}
 }

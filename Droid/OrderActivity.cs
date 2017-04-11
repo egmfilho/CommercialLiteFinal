@@ -9,18 +9,10 @@ using Android.Widget;
 
 namespace CommercialLiteFinal.Droid
 {
-	[Activity(Label = "OrderActivity")]
+	[Activity(Label = "OrderActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
 	public class OrderActivity : Activity
 	{
-		string token;
-
-		int idUsuario;
-		string idVendedor;
-		string nomeVendedor;
-		string idPreco;
-		string nomePreco;
-		string idLoja;
-		string nomeLoja;
+		Usuario user;
 
 		Pedido pedido;
 		TextView lblItens;
@@ -30,14 +22,12 @@ namespace CommercialLiteFinal.Droid
 		{
 			base.OnCreate(savedInstanceState);
 
-			LoadSharedPrefs();
+			user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
 
-			pedido = new Pedido(idUsuario, idVendedor, idPreco, idLoja);
+			pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId);
 
 			// Create your application here
 			SetContentView(Resource.Layout.Order);
-
-			token = PreferenceManager.GetDefaultSharedPreferences(this).GetString("token", "");
 
 			lblItens = FindViewById<TextView>(Resource.Id.lblItens);
 			lblTotal = FindViewById<TextView>(Resource.Id.lblTotal);
@@ -90,9 +80,9 @@ namespace CommercialLiteFinal.Droid
 				}
 			};
 
-			FindViewById<TextView>(Resource.Id.lblVendedor).Text = nomeVendedor;
-			FindViewById<TextView>(Resource.Id.lblLoja).Text = nomeLoja;
-			FindViewById<TextView>(Resource.Id.lblPreco).Text = nomePreco;
+			FindViewById<TextView>(Resource.Id.lblVendedor).Text = user.EmployeeName;
+			FindViewById<TextView>(Resource.Id.lblLoja).Text = user.ShopName;
+			FindViewById<TextView>(Resource.Id.lblPreco).Text = user.PriceName;
 
 			FindViewById<Button>(Resource.Id.btnVerItens).Click += (sender, e) => 
 			{
@@ -198,24 +188,13 @@ namespace CommercialLiteFinal.Droid
 			alert.Create().Show();
 		}
 
-		private void LoadSharedPrefs()
-		{
-			idUsuario = PreferenceManager.GetDefaultSharedPreferences(this).GetInt("userId", 0);
-			idVendedor = PreferenceManager.GetDefaultSharedPreferences(this).GetString("employeeId", "");
-			nomeVendedor = PreferenceManager.GetDefaultSharedPreferences(this).GetString("employeeName", "");
-			idPreco = PreferenceManager.GetDefaultSharedPreferences(this).GetString("priceId", "");
-			nomePreco = PreferenceManager.GetDefaultSharedPreferences(this).GetString("priceName", "");
-			idLoja = PreferenceManager.GetDefaultSharedPreferences(this).GetString("shopId", "");
-			nomeLoja = PreferenceManager.GetDefaultSharedPreferences(this).GetString("shopName", "");
-		}
-
 		private void New()
 		{
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			alert.SetTitle("Aviso!");
 			alert.SetMessage("Descartar as alterações e começar um novo orçamento?");
 			alert.SetPositiveButton("Sim", (sender, e) => { 
-				pedido = new Pedido(idUsuario, idVendedor, idPreco, idLoja); 
+				pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId); 
 				Toast.MakeText(this, "Novo Orçamento!", ToastLength.Short).Show(); 
 			});
 			alert.SetNegativeButton("Não", (sender, e) => { });
@@ -253,7 +232,7 @@ namespace CommercialLiteFinal.Droid
 			var btn = FindViewById<Button>(Resource.Id.btnAddCliente);
 			btn.Click += (sender, e) =>
 			{
-				if (pedido.Cliente == null)
+				if (pedido.Cliente == null || pedido.Cliente.Id == null)
 					StartActivity(new Intent(this, typeof(CustomerSearchActivity)));
 				else
 				{					
@@ -294,7 +273,7 @@ namespace CommercialLiteFinal.Droid
 			var t = new Thread(new ThreadStart(delegate
 			{
 				//Request.GetInstance().Uri = "http://172.16.0.148/dumpreq/";
-				var res = Request.GetInstance().Post<Pedido>("order", "insert", pedido, token);
+				var res = Request.GetInstance().Post<Pedido>("order", "insert", pedido, user.Token);
 				RunOnUiThread(() =>
 				{
 					progressDialog.Hide();
@@ -306,7 +285,7 @@ namespace CommercialLiteFinal.Droid
 					}
 					else if (res.status.code == 200)
 					{
-						pedido = new Pedido(idUsuario, idVendedor, idPreco, idLoja);
+						pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId);
 						UpdateScreen();
 						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 						alerta.SetTitle("Exportado");

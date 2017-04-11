@@ -13,8 +13,8 @@ namespace CommercialLiteFinal
 		{
 			if (_instance == null) 
 			{				
-				//_instance = new Request("http://172.16.0.82/commercial.dafel/php/mobile/");
-				_instance = new Request("http://138.204.201.14:8181/commercial/php/mobile/");
+				//_instance = new Request(Database.Teste);
+				_instance = new Request(Database.Producao);
 			}
 
 			return _instance;
@@ -31,9 +31,9 @@ namespace CommercialLiteFinal
 			Uri = uri;
 		}
 
-		public Response<T> Login<T>(string username, string password)
+		public Response<T> Login<T>(string username, string password, string guid)
 		{
-			return Post<T>("login", "", "user=" + username + "&pass=" + password, "application/x-www-form-urlencoded", "");
+			return Post<T>("login", "", "user=" + username + "&pass=" + password + "&guid=" + guid, "application/x-www-form-urlencoded", "");
 		}
 
 		public void Logout()

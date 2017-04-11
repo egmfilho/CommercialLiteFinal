@@ -100,10 +100,16 @@ namespace CommercialLiteFinal.Droid
 			public const int list = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int logo_nome_branco = 2130837511;
+			public const int locked = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int logout = 2130837512;
+			public const int logo = 2130837512;
+			
+			// aapt resource value: 0x7f020009
+			public const int logo_nome_branco = 2130837513;
+			
+			// aapt resource value: 0x7f02000a
+			public const int logout = 2130837514;
 			
 			static Drawable()
 			{
@@ -118,47 +124,50 @@ namespace CommercialLiteFinal.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f09004d
-			public const int add_produto = 2131296333;
+			// aapt resource value: 0x7f090050
+			public const int add_produto = 2131296336;
 			
-			// aapt resource value: 0x7f090043
-			public const int adicionar_produto = 2131296323;
+			// aapt resource value: 0x7f090046
+			public const int adicionar_produto = 2131296326;
 			
-			// aapt resource value: 0x7f09003b
-			public const int btnAddCliente = 2131296315;
+			// aapt resource value: 0x7f09003e
+			public const int btnAddCliente = 2131296318;
 			
-			// aapt resource value: 0x7f09002c
-			public const int btnAddItem = 2131296300;
+			// aapt resource value: 0x7f090030
+			public const int btnAddItem = 2131296304;
 			
 			// aapt resource value: 0x7f090021
 			public const int btnDecrement = 2131296289;
 			
-			// aapt resource value: 0x7f09003f
-			public const int btnFinalizar = 2131296319;
+			// aapt resource value: 0x7f090044
+			public const int btnDesbloquear = 2131296324;
+			
+			// aapt resource value: 0x7f090041
+			public const int btnFinalizar = 2131296321;
 			
 			// aapt resource value: 0x7f090023
 			public const int btnIncrement = 2131296291;
 			
-			// aapt resource value: 0x7f090033
-			public const int btnLogin = 2131296307;
+			// aapt resource value: 0x7f090037
+			public const int btnLogin = 2131296311;
 			
-			// aapt resource value: 0x7f090038
-			public const int btnVerItens = 2131296312;
+			// aapt resource value: 0x7f09003c
+			public const int btnVerItens = 2131296316;
 			
-			// aapt resource value: 0x7f090042
-			public const int contentFrame = 2131296322;
+			// aapt resource value: 0x7f090045
+			public const int contentFrame = 2131296325;
 			
 			// aapt resource value: 0x7f090027
 			public const int descontos = 2131296295;
 			
-			// aapt resource value: 0x7f09004e
-			public const int exportar_pedido = 2131296334;
+			// aapt resource value: 0x7f090051
+			public const int exportar_pedido = 2131296337;
 			
-			// aapt resource value: 0x7f09004a
-			public const int home = 2131296330;
+			// aapt resource value: 0x7f09004d
+			public const int home = 2131296333;
 			
-			// aapt resource value: 0x7f09002d
-			public const int imageView1 = 2131296301;
+			// aapt resource value: 0x7f090031
+			public const int imageView1 = 2131296305;
 			
 			// aapt resource value: 0x7f090011
 			public const int imgBtnExportados = 2131296273;
@@ -184,8 +193,8 @@ namespace CommercialLiteFinal.Droid
 			// aapt resource value: 0x7f090025
 			public const int lblDataPreco = 2131296293;
 			
-			// aapt resource value: 0x7f09002a
-			public const int lblDesconto = 2131296298;
+			// aapt resource value: 0x7f09002e
+			public const int lblDesconto = 2131296302;
 			
 			// aapt resource value: 0x7f090004
 			public const int lblDoc = 2131296260;
@@ -193,29 +202,29 @@ namespace CommercialLiteFinal.Droid
 			// aapt resource value: 0x7f09001b
 			public const int lblEAN = 2131296283;
 			
-			// aapt resource value: 0x7f09003a
-			public const int lblEndereco = 2131296314;
+			// aapt resource value: 0x7f09003d
+			public const int lblEndereco = 2131296317;
 			
 			// aapt resource value: 0x7f09000a
 			public const int lblErp = 2131296266;
 			
-			// aapt resource value: 0x7f090037
-			public const int lblItens = 2131296311;
+			// aapt resource value: 0x7f09003b
+			public const int lblItens = 2131296315;
 			
-			// aapt resource value: 0x7f090036
-			public const int lblLoja = 2131296310;
+			// aapt resource value: 0x7f09003a
+			public const int lblLoja = 2131296314;
 			
 			// aapt resource value: 0x7f090003
 			public const int lblNome = 2131296259;
 			
-			// aapt resource value: 0x7f090035
-			public const int lblOrcamento = 2131296309;
+			// aapt resource value: 0x7f090039
+			public const int lblOrcamento = 2131296313;
 			
-			// aapt resource value: 0x7f09002f
-			public const int lblPreco = 2131296303;
+			// aapt resource value: 0x7f090033
+			public const int lblPreco = 2131296307;
 			
-			// aapt resource value: 0x7f09002e
-			public const int lblQtd = 2131296302;
+			// aapt resource value: 0x7f090032
+			public const int lblQtd = 2131296306;
 			
 			// aapt resource value: 0x7f09001d
 			public const int lblQtdEstoque = 2131296285;
@@ -238,20 +247,20 @@ namespace CommercialLiteFinal.Droid
 			// aapt resource value: 0x7f090015
 			public const int lblVersao = 2131296277;
 			
-			// aapt resource value: 0x7f090034
-			public const int linear0 = 2131296308;
+			// aapt resource value: 0x7f090038
+			public const int linear0 = 2131296312;
 			
 			// aapt resource value: 0x7f090000
 			public const int linearLayout1 = 2131296256;
 			
-			// aapt resource value: 0x7f090039
-			public const int linearLayout10 = 2131296313;
+			// aapt resource value: 0x7f090028
+			public const int linearLayout10 = 2131296296;
 			
-			// aapt resource value: 0x7f09003c
-			public const int linearLayout11 = 2131296316;
+			// aapt resource value: 0x7f09002b
+			public const int linearLayout11 = 2131296299;
 			
-			// aapt resource value: 0x7f09003d
-			public const int linearLayout12 = 2131296317;
+			// aapt resource value: 0x7f09003f
+			public const int linearLayout12 = 2131296319;
 			
 			// aapt resource value: 0x7f090007
 			public const int linearLayout2 = 2131296263;
@@ -283,47 +292,47 @@ namespace CommercialLiteFinal.Droid
 			// aapt resource value: 0x7f09000e
 			public const int listaExportados = 2131296270;
 			
-			// aapt resource value: 0x7f090040
-			public const int listaItens = 2131296320;
+			// aapt resource value: 0x7f090042
+			public const int listaItens = 2131296322;
 			
-			// aapt resource value: 0x7f090041
-			public const int listaProdutos = 2131296321;
+			// aapt resource value: 0x7f090043
+			public const int listaProdutos = 2131296323;
 			
-			// aapt resource value: 0x7f090030
-			public const int logo = 2131296304;
+			// aapt resource value: 0x7f090034
+			public const int logo = 2131296308;
 			
-			// aapt resource value: 0x7f09004f
-			public const int logout = 2131296335;
-			
-			// aapt resource value: 0x7f090046
-			public const int menu_exportar1 = 2131296326;
+			// aapt resource value: 0x7f090052
+			public const int logout = 2131296338;
 			
 			// aapt resource value: 0x7f090049
-			public const int menu_exportar2 = 2131296329;
+			public const int menu_exportar1 = 2131296329;
 			
-			// aapt resource value: 0x7f090047
-			public const int menu_logout = 2131296327;
+			// aapt resource value: 0x7f09004c
+			public const int menu_exportar2 = 2131296332;
 			
-			// aapt resource value: 0x7f090045
-			public const int menu_novo1 = 2131296325;
+			// aapt resource value: 0x7f09004a
+			public const int menu_logout = 2131296330;
 			
 			// aapt resource value: 0x7f090048
-			public const int menu_novo2 = 2131296328;
+			public const int menu_novo1 = 2131296328;
 			
 			// aapt resource value: 0x7f09004b
-			public const int novo_pedido = 2131296331;
+			public const int menu_novo2 = 2131296331;
+			
+			// aapt resource value: 0x7f09004e
+			public const int novo_pedido = 2131296334;
 			
 			// aapt resource value: 0x7f090013
 			public const int relativeLayout1 = 2131296275;
 			
-			// aapt resource value: 0x7f090044
-			public const int remover_produto = 2131296324;
+			// aapt resource value: 0x7f090047
+			public const int remover_produto = 2131296327;
 			
-			// aapt resource value: 0x7f09004c
-			public const int salvar_pedido = 2131296332;
+			// aapt resource value: 0x7f09004f
+			public const int salvar_pedido = 2131296335;
 			
-			// aapt resource value: 0x7f090050
-			public const int scan = 2131296336;
+			// aapt resource value: 0x7f090053
+			public const int scan = 2131296339;
 			
 			// aapt resource value: 0x7f090016
 			public const int scrollView1 = 2131296278;
@@ -337,29 +346,35 @@ namespace CommercialLiteFinal.Droid
 			// aapt resource value: 0x7f090026
 			public const int textView2 = 2131296294;
 			
-			// aapt resource value: 0x7f09002b
-			public const int textView3 = 2131296299;
+			// aapt resource value: 0x7f09002f
+			public const int textView3 = 2131296303;
+			
+			// aapt resource value: 0x7f09002a
+			public const int textView4 = 2131296298;
+			
+			// aapt resource value: 0x7f09002d
+			public const int textView5 = 2131296301;
 			
 			// aapt resource value: 0x7f090005
 			public const int toolbar = 2131296261;
 			
-			// aapt resource value: 0x7f090028
-			public const int txtAliquota = 2131296296;
+			// aapt resource value: 0x7f090029
+			public const int txtAliquota = 2131296297;
 			
-			// aapt resource value: 0x7f09003e
-			public const int txtObs = 2131296318;
+			// aapt resource value: 0x7f090040
+			public const int txtObs = 2131296320;
 			
-			// aapt resource value: 0x7f090032
-			public const int txtPassword = 2131296306;
+			// aapt resource value: 0x7f090036
+			public const int txtPassword = 2131296310;
 			
 			// aapt resource value: 0x7f090022
 			public const int txtQuantidade = 2131296290;
 			
-			// aapt resource value: 0x7f090031
-			public const int txtUsername = 2131296305;
+			// aapt resource value: 0x7f090035
+			public const int txtUsername = 2131296309;
 			
-			// aapt resource value: 0x7f090029
-			public const int txtVlDesc = 2131296297;
+			// aapt resource value: 0x7f09002c
+			public const int txtVlDesc = 2131296300;
 			
 			static Id()
 			{
@@ -396,22 +411,28 @@ namespace CommercialLiteFinal.Droid
 			public const int item_list_row_item = 2130968582;
 			
 			// aapt resource value: 0x7f040007
-			public const int Main = 2130968583;
+			public const int Login = 2130968583;
 			
 			// aapt resource value: 0x7f040008
-			public const int Order = 2130968584;
+			public const int Main = 2130968584;
 			
 			// aapt resource value: 0x7f040009
-			public const int OrderItems = 2130968585;
+			public const int Order = 2130968585;
 			
 			// aapt resource value: 0x7f04000a
-			public const int ProductSearch = 2130968586;
+			public const int OrderItems = 2130968586;
 			
 			// aapt resource value: 0x7f04000b
-			public const int zxingscanneractivitylayout = 2130968587;
+			public const int ProductSearch = 2130968587;
 			
 			// aapt resource value: 0x7f04000c
-			public const int zxingscannerfragmentlayout = 2130968588;
+			public const int Unlock = 2130968588;
+			
+			// aapt resource value: 0x7f04000d
+			public const int zxingscanneractivitylayout = 2130968589;
+			
+			// aapt resource value: 0x7f04000e
+			public const int zxingscannerfragmentlayout = 2130968590;
 			
 			static Layout()
 			{
@@ -521,6 +542,12 @@ namespace CommercialLiteFinal.Droid
 			// aapt resource value: 0x7f050002
 			public const int home = 2131034114;
 			
+			// aapt resource value: 0x7f050025
+			public const int locked_device = 2131034149;
+			
+			// aapt resource value: 0x7f050026
+			public const int locked_message = 2131034150;
+			
 			// aapt resource value: 0x7f050022
 			public const int login = 2131034146;
 			
@@ -565,6 +592,9 @@ namespace CommercialLiteFinal.Droid
 			
 			// aapt resource value: 0x7f050009
 			public const int search = 2131034121;
+			
+			// aapt resource value: 0x7f050024
+			public const int unlock_device = 2131034148;
 			
 			// aapt resource value: 0x7f05000c
 			public const int view = 2131034124;
