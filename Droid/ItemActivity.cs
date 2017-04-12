@@ -179,7 +179,7 @@ namespace CommercialLiteFinal.Droid
 						var t = new Thread(new ThreadStart(delegate
 						{
 							var c = this.Intent.GetStringExtra("productCode");
-							item.SetProduto(Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", c), new HttpParam("price_id", "00A0000001")).data);
+							item.SetProduto(Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", c), new HttpParam("price_id", user.PriceId)).data);
 
 							RunOnUiThread(() =>
 							{
