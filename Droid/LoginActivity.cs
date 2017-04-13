@@ -52,7 +52,7 @@ namespace CommercialLiteFinal.Droid
 			button.Click += delegate
 			{
 #if DEBUG
-				Login("alessandro", "02091988");
+				Login("alessandro", "02092988");
 #else
 				Login(txtUsername.Text, txtPassword.Text);
 #endif
@@ -97,7 +97,7 @@ namespace CommercialLiteFinal.Droid
 						prompt.SetNegativeButton("Cancelar", (s2, e2) => { });
 						prompt.SetPositiveButton("Ok", (s2, e2) =>
 						{
-							if (input.Text == "123456")
+							if (input.Text == "02091988")
 							{
 								var editor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
 								editor.Clear();

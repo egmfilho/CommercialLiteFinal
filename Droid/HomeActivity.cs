@@ -53,7 +53,7 @@ namespace CommercialLiteFinal.Droid
 			};
 
 			FindViewById<TextView>(Resource.Id.lblVendedor).Text = PreferenceManager.GetDefaultSharedPreferences(this).GetString("employeeName", "");
-			FindViewById<TextView>(Resource.Id.lblVersao).Text = "versão 1.0.3";
+			FindViewById<TextView>(Resource.Id.lblVersao).Text = "versão 1.0.4";
 			if (Request.GetInstance().Uri.Equals(Database.Teste))
 				FindViewById<TextView>(Resource.Id.lblVersao).Text += " BASE TESTE";
 		}
