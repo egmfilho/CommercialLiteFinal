@@ -41,7 +41,26 @@ namespace CommercialLiteFinal.Droid
 				{
 					var res = Request.GetInstance().Post<System.Object>("authentication", "validate", "", new HttpParam("device_guid", guid));
 					RunOnUiThread(() =>
-					{						
+					{
+						if (res.status == null)
+						{
+#if DEBUG
+							AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+							alerta.SetTitle("Debug");
+							alerta.SetMessage(res.debug);
+							alerta.SetPositiveButton("Fechar", (sender, e) => { Finish(); });
+							alerta.Show();
+							return;
+#else
+							AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+							alerta.SetTitle("Aviso");
+							alerta.SetMessage("Erro no servidor. O Aplicativo será fechado, tente novamente mais tarde.");
+							alerta.SetPositiveButton("Fechar", (sender, e) => { Finish(); });
+							alerta.Show();
+							return;
+#endif
+						}
+
 						if (res.status.code == 200)
 						{
 							intent.SetClass(this, typeof(LoginActivity));		

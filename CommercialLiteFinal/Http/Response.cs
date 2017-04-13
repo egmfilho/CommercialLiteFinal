@@ -21,5 +21,9 @@ namespace CommercialLiteFinal
 			get;
 			set;
 		}
+
+#if DEBUG
+		public string debug { get; set; }
+#endif
 	}
 }

@@ -49,6 +49,21 @@ namespace CommercialLiteFinal.Droid
 				{					
 					progressDialog.Hide();
 
+					if (res.status == null)
+					{
+#if DEBUG
+						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+						alerta.SetTitle("Debug");
+						alerta.SetMessage(res.debug);
+						alerta.SetPositiveButton("Fechar", (sender, e) => { });
+						alerta.Show();
+						return;
+#else
+						Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
+							return;
+#endif
+					}
+
 					if (res.status.code == 200)
 					{
 						array = new List<Pedido>(res.data);

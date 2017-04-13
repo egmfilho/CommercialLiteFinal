@@ -179,7 +179,24 @@ namespace CommercialLiteFinal.Droid
 						var t = new Thread(new ThreadStart(delegate
 						{
 							var c = this.Intent.GetStringExtra("productCode");
-							item.SetProduto(Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", c), new HttpParam("price_id", user.PriceId)).data);
+							var res = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", c), new HttpParam("price_id", user.PriceId));
+
+							if (res.status == null)
+							{
+#if DEBUG
+								AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+								alerta.SetTitle("Debug");
+								alerta.SetMessage(res.debug);
+								alerta.SetPositiveButton("Fechar", (sender, e) => { });
+								alerta.Show();
+								return;
+#else
+								Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
+									return;
+#endif
+							}	
+
+							item.SetProduto(res.data);
 
 							RunOnUiThread(() =>
 							{

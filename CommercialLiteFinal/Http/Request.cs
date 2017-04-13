@@ -11,15 +11,14 @@ namespace CommercialLiteFinal
 
 		public static Request GetInstance()
 		{
-			if (_instance == null) 
-			{				
-				//_instance = new Request(Database.Teste);
+			if (_instance == null)
+			{
 				_instance = new Request(Database.Producao);
 			}
 
 			return _instance;
 		}
-		
+
 		public string Uri
 		{
 			get;
@@ -42,7 +41,7 @@ namespace CommercialLiteFinal
 		}
 
 		public Response<T> Post<T>(string module, string action, string token, params HttpParam[] arguments)
-		{						
+		{
 			string data = "";
 
 			HttpParam lastItem = arguments[arguments.Length - 1];
@@ -55,7 +54,7 @@ namespace CommercialLiteFinal
 				}
 			}
 
-			return Post<T>(module, action, data, "application/x-www-form-urlencoded", token);	
+			return Post<T>(module, action, data, "application/x-www-form-urlencoded", token);
 		}
 
 		public Response<T> Post<T>(string module, string action, Object obj, string token)
@@ -88,11 +87,13 @@ namespace CommercialLiteFinal
 			{
 				obj = JsonConvert.DeserializeObject<Response<T>>(j);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				string error = e.Message;
 			}
-
+#if DEBUG
+			obj.debug = j;
+#endif
 			return obj;
 		}
 	}

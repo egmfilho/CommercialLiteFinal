@@ -93,6 +93,21 @@ namespace CommercialLiteFinal.Droid
 					var res = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", query), new HttpParam("price_id", user.PriceId));
 					status = res.status;
 
+					if (res.status == null)
+					{
+#if DEBUG
+						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+						alerta.SetTitle("Debug");
+						alerta.SetMessage(res.debug);
+						alerta.SetPositiveButton("Fechar", (sender, e) => { });
+						alerta.Show();
+						return;
+#else
+						Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
+							return;
+#endif
+					}
+
 					if (status.code == 401)
 						StartActivity(new Intent(this, typeof(LogoutActivity)));					
 					else if (status.code == 200)
@@ -102,6 +117,21 @@ namespace CommercialLiteFinal.Droid
 				{
 					var res = Request.GetInstance().Post<List<Produto>>("product", "getList", user.Token, new HttpParam("NmProduto", query), new HttpParam("price_id", user.PriceId));
 					status = res.status;
+
+					if (res.status == null)
+					{
+#if DEBUG
+						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+						alerta.SetTitle("Debug");
+						alerta.SetMessage(res.debug);
+						alerta.SetPositiveButton("Fechar", (sender, e) => { });
+						alerta.Show();
+						return;
+#else
+						Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
+							return;
+#endif
+					}
 
 					if (status.code == 401)
 						StartActivity(new Intent(this, typeof(LogoutActivity)));

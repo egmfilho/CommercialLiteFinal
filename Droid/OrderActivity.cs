@@ -39,7 +39,7 @@ namespace CommercialLiteFinal.Droid
 			toolbar.FindViewById<TextView>(Resource.Id.novo_pedido).SetTextColor(Android.Graphics.Color.White);
 
 			toolbar.MenuItemClick += (sender, e) =>
-			{				
+			{
 				switch (e.Item.ItemId)
 				{
 					case Resource.Id.home:
@@ -64,7 +64,7 @@ namespace CommercialLiteFinal.Droid
 						Toast.MakeText(this, "Em breve", ToastLength.Short).Show();
 						return;
 
-					case Resource.Id.exportar_pedido:						
+					case Resource.Id.exportar_pedido:
 						Export();
 						return;
 					case Resource.Id.add_produto:
@@ -84,7 +84,7 @@ namespace CommercialLiteFinal.Droid
 			FindViewById<TextView>(Resource.Id.lblLoja).Text = user.ShopName;
 			FindViewById<TextView>(Resource.Id.lblPreco).Text = user.PriceName;
 
-			FindViewById<Button>(Resource.Id.btnVerItens).Click += (sender, e) => 
+			FindViewById<Button>(Resource.Id.btnVerItens).Click += (sender, e) =>
 			{
 				ViewItems();
 			};
@@ -93,16 +93,16 @@ namespace CommercialLiteFinal.Droid
 
 			SetAddCustomerBtn();
 
-			FindViewById<EditText>(Resource.Id.txtObs).TextChanged += (sender, e) => 
+			FindViewById<EditText>(Resource.Id.txtObs).TextChanged += (sender, e) =>
 			{
 				pedido.Observacoes = e.Text.ToString();
 			};
 
-			FindViewById<Button>(Resource.Id.btnFinalizar).Click += (sender, e) => 
+			FindViewById<Button>(Resource.Id.btnFinalizar).Click += (sender, e) =>
 			{
 				if (!Validate())
 					return;
-				
+
 				AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 				alerta.SetTitle("Finalizar");
 				alerta.SetMessage("Como deseja finalizar este orçamento?");
@@ -126,7 +126,7 @@ namespace CommercialLiteFinal.Droid
 			{
 				var item = Serializador.LoadFromXMLString<ItemPedido>(s);
 
-				switch(action)
+				switch (action)
 				{
 					case "new":
 						if (pedido.Items.FindIndex((x) => x.Produto.IdProduto == item.Produto.IdProduto) == -1)
@@ -145,7 +145,7 @@ namespace CommercialLiteFinal.Droid
 							alerta.Show();
 						}
 						break;
-					case "update":						
+					case "update":
 						pedido.Items[pedido.Items.FindIndex(x => x.Produto.IdProduto == item.Produto.IdProduto)] = item;
 						Toast.MakeText(this, "Item atualizado!", ToastLength.Short).Show();
 						break;
@@ -183,7 +183,7 @@ namespace CommercialLiteFinal.Droid
 			alert.SetMessage(message);
 			alert.SetPositiveButton(button, (sender, e) =>
 			{
-				
+
 			});
 			alert.Create().Show();
 		}
@@ -193,9 +193,10 @@ namespace CommercialLiteFinal.Droid
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			alert.SetTitle("Aviso!");
 			alert.SetMessage("Descartar as alterações e começar um novo orçamento?");
-			alert.SetPositiveButton("Sim", (sender, e) => { 
-				pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId); 
-				Toast.MakeText(this, "Novo Orçamento!", ToastLength.Short).Show(); 
+			alert.SetPositiveButton("Sim", (sender, e) =>
+			{
+				pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId);
+				Toast.MakeText(this, "Novo Orçamento!", ToastLength.Short).Show();
 			});
 			alert.SetNegativeButton("Não", (sender, e) => { });
 			alert.Create().Show();
@@ -215,7 +216,7 @@ namespace CommercialLiteFinal.Droid
 		}
 
 		private void SearchProduct()
-		{			
+		{
 			var intent = new Intent(this, typeof(ProductSearchActivity));
 			intent.AddFlags(ActivityFlags.ReorderToFront);
 			StartActivity(intent);
@@ -235,7 +236,7 @@ namespace CommercialLiteFinal.Droid
 				if (pedido.Cliente == null || pedido.Cliente.Id == null)
 					StartActivity(new Intent(this, typeof(CustomerSearchActivity)));
 				else
-				{					
+				{
 					pedido.Cliente = new Pessoa();
 					FindViewById<TextView>(Resource.Id.lblCliente).Text = "Informe um cliente";
 					FindViewById<TextView>(Resource.Id.lblEndereco).Text = "Nenhum cliente informado";
@@ -267,16 +268,30 @@ namespace CommercialLiteFinal.Droid
 		{
 			if (!Validate())
 				return;
-
+			
 			var progressDialog = ProgressDialog.Show(this, "Exportando", "Enviando informações...", true);
 
 			var t = new Thread(new ThreadStart(delegate
-			{
-				//Request.GetInstance().Uri = "http://172.16.0.148/dumpreq/";
+			{				
 				var res = Request.GetInstance().Post<Pedido>("order", "insert", pedido, user.Token);
 				RunOnUiThread(() =>
 				{
 					progressDialog.Hide();
+
+					if (res.status == null)
+					{
+#if DEBUG
+						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+						alerta.SetTitle("Debug");
+						alerta.SetMessage(res.debug);
+						alerta.SetPositiveButton("Fechar", (sender, e) => { });
+						alerta.Show();
+						return;
+#else
+						Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
+							return;
+#endif
+					}
 
 					if (res.status.code == 401)
 					{

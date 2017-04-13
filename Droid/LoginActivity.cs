@@ -54,7 +54,9 @@ namespace CommercialLiteFinal.Droid
 				//Login("alessandro", "02091988");
 				Login(txtUsername.Text, txtPassword.Text);
 			};
-
+#if DEBUG
+			button.Text = Request.GetInstance().Uri.Equals(Database.Teste) ? "Base de Teste" : "Base de Produção";
+#endif
 			magicCounter = 0;
 			timer = new System.Timers.Timer();
 			timer.Interval = 1000;
@@ -160,6 +162,21 @@ namespace CommercialLiteFinal.Droid
 				RunOnUiThread(() =>
 				{
 					progressDialog.Hide();
+
+					if (res.status == null)
+					{
+#if DEBUG
+						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+						alerta.SetTitle("Debug");
+						alerta.SetMessage(res.debug);
+						alerta.SetPositiveButton("Fechar", (sender, e) => { });
+						alerta.Show();
+						return;
+#else
+						Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
+							return;
+#endif
+					}
 
 					if (res.status.code == 200)
 					{						
