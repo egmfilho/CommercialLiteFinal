@@ -51,8 +51,11 @@ namespace CommercialLiteFinal.Droid
 			Button button = FindViewById<Button>(Resource.Id.btnLogin);
 			button.Click += delegate
 			{
-				//Login("alessandro", "02091988");
+#if DEBUG
+				Login("alessandro", "02091988");
+#else
 				Login(txtUsername.Text, txtPassword.Text);
+#endif
 			};
 #if DEBUG
 			button.Text = Request.GetInstance().Uri.Equals(Database.Teste) ? "Base de Teste" : "Base de Produção";
@@ -112,15 +115,10 @@ namespace CommercialLiteFinal.Droid
 					alert.SetNegativeButton("Fechar", (s, v) => { });
 					alert.SetNeutralButton("Trocar base",(s, v) => 
 					{
-						if (Request.GetInstance().Uri.Equals(Database.Producao))
-						{
-							Request.GetInstance().Uri = Database.Teste;
-						}
-						else
-						{
-							Request.GetInstance().Uri = Database.Producao;
-						}
+						Request.GetInstance().Uri = Request.GetInstance().Uri.Equals(Database.Producao) ? Database.Teste : Database.Producao;
 						PreferenceManager.GetDefaultSharedPreferences(this).Edit().PutString("base", Request.GetInstance().Uri).Commit();
+
+						FindViewById<Button>(Resource.Id.btnLogin).Text = Request.GetInstance().Uri.Equals(Database.Teste) ? "Base de Teste" : "Base de Produção"; ;
 					});
 					alert.Show();
 				}

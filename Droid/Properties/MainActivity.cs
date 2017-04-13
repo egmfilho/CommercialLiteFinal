@@ -17,6 +17,8 @@ namespace CommercialLiteFinal.Droid
 			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Main);
 
+			Request.GetInstance().Uri = PreferenceManager.GetDefaultSharedPreferences(this).GetString("base", Database.Producao);
+
 			Redirect();
 		}
 

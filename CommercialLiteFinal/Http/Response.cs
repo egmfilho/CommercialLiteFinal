@@ -2,28 +2,12 @@
 
 namespace CommercialLiteFinal
 {
-	public class Response<T>
+	public class Response<T> : HttpResponse
 	{
-		public Status status
-		{
-			get;
-			set;
-		}
-
 		public T data
 		{
 			get;
 			set;
 		}
-
-		public Object info
-		{
-			get;
-			set;
-		}
-
-#if DEBUG
-		public string debug { get; set; }
-#endif
 	}
 }

@@ -46,6 +46,7 @@
     <Compile Include="Models\Autenticacao.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Helper\Conversor.cs" />
+    <Compile Include="Http\HttpResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

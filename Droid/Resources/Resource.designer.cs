@@ -426,16 +426,19 @@ namespace CommercialLiteFinal.Droid
 			public const int OrderItems = 2130968586;
 			
 			// aapt resource value: 0x7f04000b
-			public const int ProductSearch = 2130968587;
+			public const int product_list_row_item = 2130968587;
 			
 			// aapt resource value: 0x7f04000c
-			public const int Unlock = 2130968588;
+			public const int ProductSearch = 2130968588;
 			
 			// aapt resource value: 0x7f04000d
-			public const int zxingscanneractivitylayout = 2130968589;
+			public const int Unlock = 2130968589;
 			
 			// aapt resource value: 0x7f04000e
-			public const int zxingscannerfragmentlayout = 2130968590;
+			public const int zxingscanneractivitylayout = 2130968590;
+			
+			// aapt resource value: 0x7f04000f
+			public const int zxingscannerfragmentlayout = 2130968591;
 			
 			static Layout()
 			{

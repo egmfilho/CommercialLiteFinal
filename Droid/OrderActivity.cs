@@ -228,6 +228,16 @@ namespace CommercialLiteFinal.Droid
 			lblTotal.Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", pedido.ValorTotalComDesconto);
 		}
 
+		private void ClearScreen()
+		{
+			lblItens.Text = string.Format("{0} produto{1}", pedido.Items.Count, pedido.Items.Count == 1 ? "" : "s");
+			lblTotal.Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", pedido.ValorTotalComDesconto);
+			FindViewById<EditText>(Resource.Id.txtObs).Text = "";
+			FindViewById<Button>(Resource.Id.btnAddCliente).Text = Resources.GetString(Resource.String.add_customer);
+			FindViewById<TextView>(Resource.Id.lblCliente).Text = "";
+			FindViewById<TextView>(Resource.Id.lblEndereco).Text = "";
+		}
+
 		private void SetAddCustomerBtn()
 		{
 			var btn = FindViewById<Button>(Resource.Id.btnAddCliente);
@@ -301,7 +311,7 @@ namespace CommercialLiteFinal.Droid
 					else if (res.status.code == 200)
 					{
 						pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId);
-						UpdateScreen();
+						ClearScreen();
 						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 						alerta.SetTitle("Exportado");
 						var msg = string.Format("O orçamento foi exportado com sucesso! \nCódigo: {0:000000} \nErp: {1:000000}", res.data.Codigo, res.data.Erp);

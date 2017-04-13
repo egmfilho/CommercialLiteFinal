@@ -149,8 +149,9 @@ namespace CommercialLiteFinal.Droid
 					else //420 = ja cadastrado
 					{
 						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
-						alerta.SetTitle("Erro");
-						alerta.SetMessage("Não foi possível autenticar o aparelho!");
+						alerta.SetTitle(res.status.message);
+						//alerta.SetMessage("Não foi possível autenticar o aparelho!");
+						alerta.SetMessage(res.status.description);
 						alerta.SetPositiveButton("Fechar", (sender, e) => { });
 						alerta.Show();
 						GetId();

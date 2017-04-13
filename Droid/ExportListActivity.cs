@@ -40,10 +40,8 @@ namespace CommercialLiteFinal.Droid
 		{
 			var progressDialog = ProgressDialog.Show(this, "Carregando", "Buscando orçamentos...", true);
 			var t = new Thread(new ThreadStart(delegate
-			{
-				string idUsuario = PreferenceManager.GetDefaultSharedPreferences(this).GetInt("userId", 0).ToString();
-
-				var res = Request.GetInstance().Post<List<Pedido>>("order", "getList", user.Token, new HttpParam("order_user_id", idUsuario), new HttpParam("order_limit", "20"));
+			{				
+				var res = Request.GetInstance().Post<List<Pedido>>("order", "getList", user.Token, new HttpParam("order_user_id", user.UserId.ToString()), new HttpParam("order_limit", "20"));
 
 				RunOnUiThread(() =>
 				{					

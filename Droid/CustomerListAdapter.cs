@@ -45,9 +45,21 @@ namespace CommercialLiteFinal.Droid
 
 			var view = context.LayoutInflater.Inflate(Resource.Layout.customer_list_row_item, null);
 
-			view.FindViewById<TextView>(Resource.Id.lblCodigo).Text = string.Format("{0}", item.Codigo);
-			view.FindViewById<TextView>(Resource.Id.lblNome).Text = item.Nome;
-			view.FindViewById<TextView>(Resource.Id.lblDoc).Text = string.Format("Documento: {0}", item.Doc);
+			var cod = view.FindViewById<TextView>(Resource.Id.lblCodigo);
+			cod.Text = string.Format("{0}", item.Codigo);
+
+			var nome = view.FindViewById<TextView>(Resource.Id.lblNome);
+			nome.Text = item.Nome;
+
+			var doc = view.FindViewById<TextView>(Resource.Id.lblDoc);
+			doc.Text = string.Format("Documento: {0}", item.Doc);
+
+			if (!array[position].Ativo)
+			{
+				cod.SetTextColor(Android.Graphics.Color.ParseColor("#bbbbbb"));
+				nome.SetTextColor(Android.Graphics.Color.ParseColor("#bbbbbb"));
+				doc.SetTextColor(Android.Graphics.Color.ParseColor("#bbbbbb"));
+			}
 
 			return view;
 		}

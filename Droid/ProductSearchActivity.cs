@@ -42,7 +42,7 @@ namespace CommercialLiteFinal.Droid
 			};
 
 			listView = FindViewById<ListView>(Resource.Id.listaProdutos);
-			listView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) => 
+			listView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
 			{
 				var produto = arrayProdutos[e.Position];
 
@@ -55,7 +55,7 @@ namespace CommercialLiteFinal.Droid
 					alert.Show();
 					return;
 				}
-					
+
 				var intent = new Intent(this, typeof(ItemActivity));
 				intent.PutExtra("productCode", produto.CdProduto);
 				intent.PutExtra("action", "new");
@@ -66,7 +66,7 @@ namespace CommercialLiteFinal.Droid
 			searchView.SetIconifiedByDefault(false);
 
 			searchView.QueryTextSubmit += (object sender, SearchView.QueryTextSubmitEventArgs e) =>
-			{				
+			{
 				string query = e.Query;
 
 				if (string.IsNullOrEmpty(query))
@@ -83,79 +83,65 @@ namespace CommercialLiteFinal.Droid
 			var progressDialog = ProgressDialog.Show(this, "Pesquisando", "Checando produtos...", true);
 
 			var t = new Thread(new ThreadStart(delegate
-			{				
-				Status status;
+			{
+				HttpResponse res;
+				List<Produto> array;
 				arrayProdutos.Clear();
 
 				long codigo;
 				if (long.TryParse(query, out codigo))
 				{
-					var res = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", query), new HttpParam("price_id", user.PriceId));
-					status = res.status;
-
-					if (res.status == null)
-					{
-#if DEBUG
-						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
-						alerta.SetTitle("Debug");
-						alerta.SetMessage(res.debug);
-						alerta.SetPositiveButton("Fechar", (sender, e) => { });
-						alerta.Show();
-						return;
-#else
-						Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
-							return;
-#endif
-					}
-
-					if (status.code == 401)
-						StartActivity(new Intent(this, typeof(LogoutActivity)));					
-					else if (status.code == 200)
-						arrayProdutos = new List<Produto>(new Produto[] { res.data } );
+					Response<Produto> response = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", query), new HttpParam("price_id", user.PriceId));
+					array = response.data != null ? new List<Produto>(new Produto[] { response.data }) : new List<Produto>();
+					res = (HttpResponse)response;
 				}
 				else
 				{
-					var res = Request.GetInstance().Post<List<Produto>>("product", "getList", user.Token, new HttpParam("NmProduto", query), new HttpParam("price_id", user.PriceId));
-					status = res.status;
-
-					if (res.status == null)
-					{
-#if DEBUG
-						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
-						alerta.SetTitle("Debug");
-						alerta.SetMessage(res.debug);
-						alerta.SetPositiveButton("Fechar", (sender, e) => { });
-						alerta.Show();
-						return;
-#else
-						Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
-							return;
-#endif
-					}
-
-					if (status.code == 401)
-						StartActivity(new Intent(this, typeof(LogoutActivity)));
-					else if (status.code == 200)
-						arrayProdutos = new List<Produto>(res.data);
+					Response<List<Produto>> response = Request.GetInstance().Post<List<Produto>>("product", "getList", user.Token, new HttpParam("NmProduto", query), new HttpParam("price_id", user.PriceId));
+					array = response.data != null ? new List<Produto>(response.data) : new List<Produto>();
+					res = (HttpResponse)response;
 				}
 
 				RunOnUiThread(() =>
 				{
+					if (res.status == null)
+					{
+#if DEBUG
+						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+						alerta.SetTitle("Debug");
+						alerta.SetMessage(res.debug);
+						alerta.SetPositiveButton("Fechar", (sender, e) => { });
+						alerta.Show();
+						return;
+#else
+						Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
+							return;
+#endif
+					}
+											
+					if (res.status.code == 200)
+					{
+						arrayProdutos = new List<Produto>(array);
+						Toast.MakeText(this, arrayProdutos.Count + " produtos encontrados!", ToastLength.Short).Show();
+					}
+					else
+					{
+						if (res.status.code == 401)
+							StartActivity(new Intent(this, typeof(LogoutActivity)));
+
+						Toast.MakeText(this, res.status.description, ToastLength.Short).Show();
+					}
+
 					progressDialog.Hide();
 					searchView.ClearFocus();
 					listView.Adapter = new ProductListAdapter(this, arrayProdutos);
-
-					if (status.code != 200)
-						Toast.MakeText(this, status.description, ToastLength.Short).Show();
-					else
-						Toast.MakeText(this, arrayProdutos.Count + " produtos encontrados!", ToastLength.Short).Show();						
 				});
 			}));
 			t.Start();
 		}
 
 		private async void Scan()
-		{			
+		{
 			MobileBarcodeScanningOptions options = new MobileBarcodeScanningOptions();
 			options.AutoRotate = false;
 
