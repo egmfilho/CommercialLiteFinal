@@ -126,11 +126,25 @@ namespace CommercialLiteFinal
 		[JsonProperty("order_date")]
 		public DateTime Data { get; set; }
 
-		public Pedido(int idUsuario, string idVendedor, string idPrecos, string idLoja)
+		[JsonProperty("order_address_delivery_code")]
+		public string CdEntrega { get; set; }
+
+		Endereco entrega;
+		[JsonProperty("address_delivery")]
+		public Endereco Entrega
+		{
+			get { return entrega; }
+			set
+			{
+				this.entrega = value;
+				this.CdEntrega = value.Codigo;
+			}
+		}
+
+		public Pedido(int idUsuario, string idVendedor, string idLoja)
 		{
 			this.IdUsuario = idUsuario;
 			this.IdVendedor = idVendedor;
-			this.IdPrecos = idPrecos;
 			this.IdLoja = idLoja;
 			this.Items = new List<ItemPedido>();
 		}

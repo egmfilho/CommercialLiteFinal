@@ -25,11 +25,13 @@ namespace CommercialLiteFinal.Droid
 		{
 			base.OnCreate(savedInstanceState);
 
+			System.Diagnostics.Debug.WriteLine("[#] Login activity");
+
 			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Login);
 
 			var xml = PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", "");
-			var storedUser = string.IsNullOrEmpty(xml) ? "" : Serializador.LoadFromXMLString<Usuario>(xml).UserName;
+			var storedUser = string.IsNullOrEmpty(xml) ? "" : Serializador.LoadFromXMLString<Usuario>(xml).Username;
 			if (!string.IsNullOrEmpty(storedUser))
 			{
 				FindViewById<EditText>(Resource.Id.txtUsername).Text = storedUser;
@@ -52,7 +54,7 @@ namespace CommercialLiteFinal.Droid
 			button.Click += delegate
 			{
 #if DEBUG
-				Login("alessandro", "02092988");
+				Login("alessandro", "02091988");
 #else
 				Login(txtUsername.Text, txtPassword.Text);
 #endif
@@ -144,15 +146,15 @@ namespace CommercialLiteFinal.Droid
 			var t = new Thread(new ThreadStart(delegate
 			{
 				var guid = PreferenceManager.GetDefaultSharedPreferences(this).GetString("guid", "");
-				Response<Login> res;
+				Response<Usuario> res;
 
 				try
 				{					
-					res = Request.GetInstance().Login<Login>(username, password, guid);
+					res = Request.GetInstance().Login<Usuario>(username, password, guid);
 				}
 				catch (Exception e)
 				{
-					res = new Response<Login>();
+					res = new Response<Usuario>();
 					res.status.code = -1;
 					res.status.message = e.Message;
 				}
@@ -178,7 +180,7 @@ namespace CommercialLiteFinal.Droid
 
 					if (res.status.code == 200)
 					{						
-						if (string.IsNullOrEmpty(res.data.user_seller.Id))
+						if (string.IsNullOrEmpty(res.data.Vendedor.Id))
 						{
 							AlertDialog.Builder alert = new AlertDialog.Builder(this);
 							alert.SetTitle("Erro");
@@ -189,21 +191,11 @@ namespace CommercialLiteFinal.Droid
 						}
 
 						Request.GetInstance().Uri = PreferenceManager.GetDefaultSharedPreferences(this).GetString("base", Database.Producao);
-						var user = new Usuario
-						{
-							UserId = res.data.user_id,
-							UserName = res.data.user_user,
-							Token = res.data.user_current_session_id + ":" + res.data.user_id + ":" + guid,
-							EmployeeId = res.data.user_seller.Id,
-							EmployeeName = res.data.user_seller.Nome,
-							MaxDiscount = (float)res.data.user_max_discount,
-							PriceId = res.data.user_price_id,
-							PriceName = res.data.user_price.price_name,
-							ShopId = res.data.user_shop_id,
-							ShopName = res.data.user_shop.shop_name
-						};
+						var user = res.data;
+						user.Token = res.data.Id + ":" + res.data.Sessao.Valor + ":" + guid;
 
 						PreferenceManager.GetDefaultSharedPreferences(this).Edit().PutString("user", Serializador.ToXML(user)).Apply();
+						PreferenceManager.GetDefaultSharedPreferences(this).Edit().PutString("shop", Serializador.ToXML(user.Lojas[0])).Apply();
 
 						Toast.MakeText(this, "Login efetuado!", ToastLength.Short).Show();
 						StartActivity(new Intent(this, typeof(HomeActivity)));

@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 
 <resources>
-	<color name="main">#178DC9</color>
-	<color name="dark">#0e5376</color>
-	<color name="text">#0e5376</color>
-	<color name="accent">#178DC9</color>
+	<color name="main">#5b5b5d</color>
+	<color name="secondary">#FA9344</color>
+	<color name="dark">#5b5b5d</color>
+	<color name="text">#5b5b5d</color>
+	<color name="accent">#FA9344</color>
 	<color name="background">#e5e5e5</color>
 	<color name="borderColor">#10000000</color>
 	
@@ -35,7 +36,7 @@
 	</style>
 
 	<style name="Button.Primary" parent="">
-		<item name="android:backgroundTint">@color/main</item>
+		<item name="android:backgroundTint">@color/secondary</item>
 		<item name="android:textColor">#FFFFFF</item>
 		<item name="android:textSize">15sp</item>
 	</style>
@@ -47,7 +48,7 @@
 	</style>
 
 	<style name="Spinner.Primary" parent="">
-		<item name="android:colorControlNormal">@color/main</item>
+		<item name="android:colorControlNormal">@color/secondary</item>
 	</style>
 	
 </resources>	

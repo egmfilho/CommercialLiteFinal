@@ -139,6 +139,7 @@ namespace CommercialLiteFinal.Droid
 					{
 						var editor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
 						editor.PutString("guid", guid);
+						System.Diagnostics.Debug.WriteLine("[#] " + res.data.ToString());
 						editor.PutString("authentication", Serializador.ToXML(res.data));
 						editor.Apply();
 						var intent = new Intent(this, typeof(LoginActivity));

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Android.App;
 using Android.Content;
@@ -13,6 +14,7 @@ namespace CommercialLiteFinal.Droid
 	public class OrderActivity : Activity
 	{
 		Usuario user;
+		Loja shop;
 
 		Pedido pedido;
 		TextView lblItens;
@@ -23,8 +25,9 @@ namespace CommercialLiteFinal.Droid
 			base.OnCreate(savedInstanceState);
 
 			user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
+			shop = Serializador.LoadFromXMLString<Loja>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("shop", ""));
 
-			pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId);
+			pedido = new Pedido(user.Id, user.Vendedor.Id, shop.Id);
 
 			// Create your application here
 			SetContentView(Resource.Layout.Order);
@@ -80,9 +83,8 @@ namespace CommercialLiteFinal.Droid
 				}
 			};
 
-			FindViewById<TextView>(Resource.Id.lblVendedor).Text = user.EmployeeName;
-			FindViewById<TextView>(Resource.Id.lblLoja).Text = user.ShopName;
-			FindViewById<TextView>(Resource.Id.lblPreco).Text = user.PriceName;
+			FindViewById<TextView>(Resource.Id.lblVendedor).Text = user.Vendedor.Nome;
+			FindViewById<TextView>(Resource.Id.lblLoja).Text = string.Format("{0} - {1}", shop.ERP.Codigo, shop.ERP.Nome);
 
 			FindViewById<Button>(Resource.Id.btnVerItens).Click += (sender, e) =>
 			{
@@ -131,6 +133,9 @@ namespace CommercialLiteFinal.Droid
 					case "new":
 						if (pedido.Items.FindIndex((x) => x.Produto.IdProduto == item.Produto.IdProduto) == -1)
 						{
+							if (item.IdPreco == null)
+								item.IdPreco = item.Produto.Precos.ElementAt(0).Id;
+							
 							pedido.Items.Add(item);
 							Toast.MakeText(this, "Item adicionado!", ToastLength.Short).Show();
 						}
@@ -165,13 +170,27 @@ namespace CommercialLiteFinal.Droid
 				pedido.Cliente = Serializador.LoadFromXMLString<Pessoa>(p);
 				Toast.MakeText(this, "Cliente adicionado!", ToastLength.Short).Show();
 				FindViewById<TextView>(Resource.Id.lblCliente).Text = string.Format("{0} - {1}", pedido.Cliente.Codigo, pedido.Cliente.Nome);
-				string endereco;
-				if (pedido.Cliente.Cep == null)
-					endereco = "Nenhum endereço cadastrado";
+				if (pedido.Cliente.Enderecos.Count == 0)
+				{
+					FindViewById<TextView>(Resource.Id.lblEndereco).Text = "Nenhum endereço cadastrado";
+				}
 				else
-					endereco = string.Format("{0} {1}, {2} - {3} {4}", pedido.Cliente.Cep.Logradouro, pedido.Cliente.Cep.Numero, pedido.Cliente.Cep.Bairro, pedido.Cliente.Cep.Cidade, pedido.Cliente.Cep.UF);
-				FindViewById<TextView>(Resource.Id.lblEndereco).Text = endereco;
-
+				{
+					var display = pedido.Cliente.Enderecos.Select<Endereco, String>(e => e.ToString()).ToList();
+					var adapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItemSingleChoice, display);
+					int index = 0;
+					AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+					alerta.SetTitle("Endereço de entrega");
+					alerta.SetSingleChoiceItems(adapter, index, (sender, e) => {
+						index = e.Which;
+					});
+					alerta.SetPositiveButton("Confirmar", (sender, e) =>
+					{
+						pedido.Entrega = pedido.Cliente.Enderecos.ElementAt(index);
+						FindViewById<TextView>(Resource.Id.lblEndereco).Text = pedido.Entrega.ToString();
+					});
+					alerta.Show();
+				}
 				FindViewById<Button>(Resource.Id.btnAddCliente).Text = Resources.GetString(Resource.String.remove_customer);
 			}
 		}
@@ -195,7 +214,7 @@ namespace CommercialLiteFinal.Droid
 			alert.SetMessage("Descartar as alterações e começar um novo orçamento?");
 			alert.SetPositiveButton("Sim", (sender, e) =>
 			{
-				pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId);
+				pedido = new Pedido(user.Id, user.Vendedor.Id, shop.Id);
 				Toast.MakeText(this, "Novo Orçamento!", ToastLength.Short).Show();
 			});
 			alert.SetNegativeButton("Não", (sender, e) => { });
@@ -310,7 +329,7 @@ namespace CommercialLiteFinal.Droid
 					}
 					else if (res.status.code == 200)
 					{
-						pedido = new Pedido(user.UserId, user.EmployeeId, user.PriceId, user.ShopId);
+						pedido = new Pedido(user.Id, user.Vendedor.Id, shop.Id);
 						ClearScreen();
 						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 						alerta.SetTitle("Exportado");

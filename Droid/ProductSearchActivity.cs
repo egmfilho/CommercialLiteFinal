@@ -13,6 +13,7 @@ namespace CommercialLiteFinal.Droid
 	public class ProductSearchActivity : Activity
 	{
 		Usuario user;
+		Loja shop;
 
 		List<Produto> arrayProdutos = new List<Produto>();
 		ListView listView;
@@ -23,6 +24,7 @@ namespace CommercialLiteFinal.Droid
 			base.OnCreate(savedInstanceState);
 
 			user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
+			shop = Serializador.LoadFromXMLString<Loja>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("shop", ""));
 
 			MobileBarcodeScanner.Initialize(Application);
 			SetContentView(Resource.Layout.ProductSearch);
@@ -46,7 +48,7 @@ namespace CommercialLiteFinal.Droid
 			{
 				var produto = arrayProdutos[e.Position];
 
-				if (!produto.Ativo)
+				if (produto.Ativo != 'Y')
 				{
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
 					alert.SetTitle("Aviso");
@@ -58,6 +60,7 @@ namespace CommercialLiteFinal.Droid
 
 				var intent = new Intent(this, typeof(ItemActivity));
 				intent.PutExtra("productCode", produto.CdProduto);
+				intent.PutExtra("shopCode", shop.ERP.Codigo);
 				intent.PutExtra("action", "new");
 				StartActivity(intent);
 			};
@@ -91,13 +94,13 @@ namespace CommercialLiteFinal.Droid
 				long codigo;
 				if (long.TryParse(query, out codigo))
 				{
-					Response<Produto> response = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", query), new HttpParam("price_id", user.PriceId));
+					Response<Produto> response = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("product_code", query), new HttpParam("company_id", shop.ERP.Codigo), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_stock", "1"), new HttpParam("get_product_price", "1"));
 					array = response.data != null ? new List<Produto>(new Produto[] { response.data }) : new List<Produto>();
 					res = (HttpResponse)response;
 				}
 				else
 				{
-					Response<List<Produto>> response = Request.GetInstance().Post<List<Produto>>("product", "getList", user.Token, new HttpParam("NmProduto", query), new HttpParam("price_id", user.PriceId));
+					Response<List<Produto>> response = Request.GetInstance().Post<List<Produto>>("product", "getList", user.Token, new HttpParam("product_name", query), new HttpParam("company_id", shop.ERP.Codigo), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_stock", "1"), new HttpParam("get_product_price", "1"));
 					array = response.data != null ? new List<Produto>(response.data) : new List<Produto>();
 					res = (HttpResponse)response;
 				}

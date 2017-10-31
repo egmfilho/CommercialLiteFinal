@@ -25,7 +25,8 @@
             android:id="@+id/lblNome"
             android:layout_gravity="center_vertical"
             style="@style/Text.Primary"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/secondary" />
         <TextView
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall"

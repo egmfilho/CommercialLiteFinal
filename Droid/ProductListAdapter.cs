@@ -50,9 +50,10 @@ namespace CommercialLiteFinal.Droid
 			nome.Text = item.NmProduto;
 
 			var preco = view.FindViewById<TextView>(Resource.Id.lblPreco);
-			preco.Text = item.VlPreco.ToString("C");
+			//preco.Text = item.Precos[0].Valor.ToString("C");
+			preco.Text = string.Format(System.Globalization.CultureInfo.GetCultureInfo("pt-BR"), "Preço: {0:C} | Estoque: {1}", item.Precos[0].Valor, item.Estoque == null ? "indisponível" : item.Estoque.Quantidade.ToString());
 
-			if (!array[position].Ativo)
+			if (array[position].Ativo != 'Y')
 			{
 				codigo.SetTextColor(Android.Graphics.Color.ParseColor("#bbbbbb"));
 				nome.SetTextColor(Android.Graphics.Color.ParseColor("#bbbbbb"));

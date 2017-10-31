@@ -11,7 +11,7 @@ namespace CommercialLiteFinal.Droid
 		List<ItemPedido> array;
 		Android.App.Activity context;
 
-		public ItemListAdapter(Android.App.Activity context, System.Collections.Generic.List<ItemPedido> array) 
+		public ItemListAdapter(Android.App.Activity context, List<ItemPedido> array) 
 			: base()
 		{
 			this.context = context;
@@ -47,8 +47,9 @@ namespace CommercialLiteFinal.Droid
 
 			view.FindViewById<TextView>(Resource.Id.lblCodigo).Text = string.Format("{0}", item.Produto.CdProduto);
 			view.FindViewById<TextView>(Resource.Id.lblNome).Text = string.Format("{0}x {1}", item.Quantidade, item.Produto.NmProduto);
-			view.FindViewById<TextView>(Resource.Id.lblQtd).Text = string.Format("Quantidade: {0} {1}", item.Quantidade, item.Produto.Unidade);
-			view.FindViewById<TextView>(Resource.Id.lblPreco).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor unitário: {0:C}", item.Produto.VlPreco);
+			view.FindViewById<TextView>(Resource.Id.lblQtd).Text = string.Format("Quantidade: {0} {1}", item.Quantidade, item.Produto.Unidade.Iniciais);
+			//view.FindViewById<TextView>(Resource.Id.lblPreco).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor unitário: {0:C}", item.GetTabelaDePreco().Valor);
+			view.FindViewById<TextView>(Resource.Id.lblPreco).Text = item.GetTabelaDePreco().ToString(CultureInfo.GetCultureInfo("pt-BR"));
 			view.FindViewById<TextView>(Resource.Id.lblDesconto).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Desconto: {0:0.##}% {1:C}", item.DescontoPercent, item.DescontoDinheiro);
 			view.FindViewById<TextView>(Resource.Id.lblTotal).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor Total: {0:C}", item.ValorTotalComDesconto);
 

@@ -52,9 +52,9 @@ namespace CommercialLiteFinal.Droid
 			nome.Text = item.Nome;
 
 			var doc = view.FindViewById<TextView>(Resource.Id.lblDoc);
-			doc.Text = string.Format("Documento: {0}", item.Doc);
+			doc.Text = string.Format("Documento: {0}", item.CPF != null ? item.CPF : item.CNPJ);
 
-			if (!array[position].Ativo)
+			if (array[position].Ativo != 'Y')
 			{
 				cod.SetTextColor(Android.Graphics.Color.ParseColor("#bbbbbb"));
 				nome.SetTextColor(Android.Graphics.Color.ParseColor("#bbbbbb"));

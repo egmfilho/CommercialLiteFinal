@@ -5,13 +5,13 @@ namespace CommercialLiteFinal
 {
 	public class Autenticacao
 	{
-		[JsonProperty("device_authentication_user_id")]
+		[JsonProperty("user_id")]
 		public string UserId { get; set; }
 
-		[JsonProperty("device_authentication_user_name")]
+		[JsonProperty("user_name")]
 		public string UserName { get; set; }
 
-		[JsonProperty("device_authentication_date")]
+		[JsonProperty("date")]
 		public DateTime Date { get; set; }
 	}
 }

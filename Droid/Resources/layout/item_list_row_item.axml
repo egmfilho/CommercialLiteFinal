@@ -47,7 +47,8 @@
                 p1:layout_height="wrap_content"
                 p1:id="@+id/lblNome"
                 p1:layout_gravity="center_vertical"
-                style="@style/Text.Primary" />
+                style="@style/Text.Primary"
+                p1:textColor="@color/secondary" />
             <TextView
                 p1:text="Small Text"
                 p1:textAppearance="?android:attr/textAppearanceSmall"

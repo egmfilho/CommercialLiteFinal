@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Android.App;
 using Android.Content;
@@ -99,6 +101,11 @@ namespace CommercialLiteFinal.Droid
 				UpdateScreen();
 			};
 
+			FindViewById<Button>(Resource.Id.btnPrices).Click += (s, e) =>
+			{
+				changePrice();
+			};
+
 			var txtAl = FindViewById<Input>(Resource.Id.txtAliquota);
 			var txtVl = FindViewById<Input>(Resource.Id.txtVlDesc);
 
@@ -179,7 +186,8 @@ namespace CommercialLiteFinal.Droid
 						var t = new Thread(new ThreadStart(delegate
 						{
 							var c = this.Intent.GetStringExtra("productCode");
-							var res = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("CdProduto", c), new HttpParam("price_id", user.PriceId));
+							var shopCode = this.Intent.GetStringExtra("shopCode");
+							var res = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("product_code", c), new HttpParam("company_id", shopCode), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_stock", "1"), new HttpParam("get_product_price", "1"));
 
 							if (res.status == null)
 							{
@@ -202,7 +210,7 @@ namespace CommercialLiteFinal.Droid
 							{
 								progressDialog.Hide();
 
-								if (item.Produto.VlPreco == 0)
+								if (item.GetTabelaDePreco().Valor == 0)
 								{									
 									Toast.MakeText(this, "O produto não possui preço cadastrado", ToastLength.Long).Show();
 									Finish();
@@ -227,16 +235,37 @@ namespace CommercialLiteFinal.Droid
 			}
 		}
 
+		private void changePrice()
+		{
+			var display = item.Produto.Precos.Select<Preco, String>(preco => preco.ToString(CultureInfo.GetCultureInfo("pt-BR"))).ToList();
+			var adapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItemSingleChoice, display);
+			int index = 0;
+			AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+			alerta.SetTitle("Tabela de preços");
+			alerta.SetSingleChoiceItems(adapter, index, (sender, e) => {
+				index = e.Which;
+			});
+			alerta.SetPositiveButton("Confirmar", (sender, e) =>
+			{
+				item.IdPreco = item.Produto.Precos.ElementAt(index).Id;
+				UpdateScreen();
+			});
+			alerta.Show();
+		}
+
 		private void UpdateScreen()
 		{
 			FindViewById<TextView>(Resource.Id.lblCodigo).Text = "Código: " + item.Produto.CdProduto;
 			FindViewById<TextView>(Resource.Id.lblNome).Text = item.Produto.NmProduto;
 			FindViewById<TextView>(Resource.Id.lblEAN).Text = "EAN: " + item.Produto.EAN;
-			FindViewById<TextView>(Resource.Id.lblUnidade).Text = "Unidade: " + item.Produto.Unidade;
-			string dataPreco = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Data do preço: {0:d}", item.Produto.DtPreco);
+			FindViewById<TextView>(Resource.Id.lblUnidade).Text = "Unidade: " + item.Produto.Unidade.Nome;
+			string dataPreco = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Data do preço: {0:d}", item.GetTabelaDePreco().Data);
 			FindViewById<TextView>(Resource.Id.lblDataPreco).Text = dataPreco;
-			FindViewById<TextView>(Resource.Id.lblValor).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor unitário {0:C}", item.Produto.VlPreco);
-			FindViewById<TextView>(Resource.Id.lblQtdEstoque).Text = "Quantidade em estoque: " + item.Produto.QtEstoque.ToString();
+			FindViewById<TextView>(Resource.Id.lblValor).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor unitário {0:C}", item.GetTabelaDePreco().Valor);
+			if (item.Produto.Estoque == null)
+				FindViewById<TextView>(Resource.Id.lblQtdEstoque).Text = "Quantidade em estoque: indisponível";
+			else
+				FindViewById<TextView>(Resource.Id.lblQtdEstoque).Text = "Quantidade em estoque: " + item.Produto.Estoque.Quantidade.ToString();
 			FindViewById<TextView>(Resource.Id.lblValorTotal).Text = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", item.ValorTotal);
 			FindViewById<EditText>(Resource.Id.txtAliquota).Text = item.DescontoPercent.ToString("0.00");
 			FindViewById<EditText>(Resource.Id.txtVlDesc).Text = item.DescontoDinheiro.ToString("0.00");

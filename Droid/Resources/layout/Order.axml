@@ -74,15 +74,6 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center"
                         android:text="Loja" />
-                    <TextView
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/lblPreco"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="Tabela de preços" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout

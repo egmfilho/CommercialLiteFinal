@@ -32,7 +32,7 @@ namespace CommercialLiteFinal
 
 		public Response<T> Login<T>(string username, string password, string guid)
 		{
-			return Post<T>("login", "", "user=" + username + "&pass=" + password + "&guid=" + guid, "application/x-www-form-urlencoded", "");
+			return Post<T>("login", "", "user_user=" + username + "&user_pass=" + password + "&device_guid=" + guid, "application/x-www-form-urlencoded", "");
 		}
 
 		public void Logout()
@@ -72,6 +72,8 @@ namespace CommercialLiteFinal
 			if (!string.IsNullOrEmpty(action))
 				uri += "?action=" + action;
 
+			System.Diagnostics.Debug.WriteLine("[#] " + uri);
+
 			HttpClient client = new HttpClient();
 			client.DefaultRequestHeaders.Add("x-session-token", token);
 
@@ -89,7 +91,10 @@ namespace CommercialLiteFinal
 			}
 			catch (Exception e)
 			{
+#if DEBUG
 				string error = e.Message;
+				obj.error = error;
+#endif
 			}
 #if DEBUG
 			obj.debug = j;

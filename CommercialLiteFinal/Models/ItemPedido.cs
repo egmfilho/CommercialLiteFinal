@@ -8,12 +8,15 @@ namespace CommercialLiteFinal
 		[JsonProperty("order_item_id")]
 		public int Id { get; set; }
 
+		[JsonProperty("order_id")]
 		public int IdPedido { get; set; }
 
 		[JsonProperty("product_id")]
 		public string IdProduto { get; set; }
 
-		//public Decimal PrecoProduto { get; set; }
+		[JsonProperty("price_id")]
+		public string IdPreco { get; set; }
+
 
 		[JsonProperty("order_item_al_discount")]
 		public Decimal DescontoPercent { get; set; }
@@ -56,7 +59,7 @@ namespace CommercialLiteFinal
 		[JsonProperty("order_item_value")]
 		public Decimal ValorTotal
 		{
-			get { return this.Produto != null ? this.Produto.VlPreco * this.Quantidade : 0; }
+			get { return this.Produto != null ? this.GetTabelaDePreco().Valor * this.Quantidade : 0; }
 		}
 
 		[JsonProperty("order_item_value_total")]
@@ -89,6 +92,18 @@ namespace CommercialLiteFinal
 		public void UpdateDescontos()
 		{
 			this.SetDescontoPercent(DescontoPercent);
+		}
+
+		public Preco GetTabelaDePreco() {
+			if (Produto.Precos.Count == 0) return null;
+
+			if (IdPreco == null)
+			{
+				IdPreco = Produto.Precos[0].Id;
+			}
+
+			var x = this.Produto.Precos.Find((Preco obj) => obj.Id == this.IdPreco);
+			return x;
 		}
 	}
 }

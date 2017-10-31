@@ -30,7 +30,7 @@ namespace CommercialLiteFinal.Droid
 			{
 				var pessoa = arrayPessoas[e.Position];
 
-				if (!pessoa.Ativo)
+				if (pessoa.Ativo != 'Y')
 				{
 					AlertDialog.Builder alert = new AlertDialog.Builder(this);
 					alert.SetTitle("Aviso");
@@ -61,6 +61,7 @@ namespace CommercialLiteFinal.Droid
 
 		private void Search(string query)
 		{
+			System.Diagnostics.Debug.WriteLine("[#] Searh started");
 			var progressDialog = ProgressDialog.Show(this, "Pesquisando", "Checando pessoas...", true);
 
 			var t = new Thread(new ThreadStart(delegate
@@ -71,16 +72,20 @@ namespace CommercialLiteFinal.Droid
 				int codigo;
 				if (int.TryParse(query, out codigo))
 				{
-					var res = Request.GetInstance().Post<Pessoa>("person", "get", user.Token, new HttpParam("CdPessoa", query), new HttpParam("TpPessoa", "Cliente"));
+					var res = Request.GetInstance().Post<Pessoa>("person", "get", user.Token, new HttpParam("person_code", query));
 					status = res.status;
 					if (status.code == 401)
 						StartActivity(new Intent(this, typeof(LogoutActivity)));
 					else if (status.code == 200)
+					{
 						arrayPessoas.Add(res.data);
+						System.Diagnostics.Debug.WriteLine("[#] " + res.data.Nome);
+					}
+
 				}
 				else
 				{
-					var res = Request.GetInstance().Post<List<Pessoa>>("person", "getList", user.Token, new HttpParam("NmPessoa", query), new HttpParam("TpPessoa", "Cliente"));
+					var res = Request.GetInstance().Post<List<Pessoa>>("person", "getList", user.Token, new HttpParam("person_name", query));
 					status = res.status;
 					if (status.code == 401)
 						StartActivity(new Intent(this, typeof(LogoutActivity)));
@@ -92,6 +97,7 @@ namespace CommercialLiteFinal.Droid
 				{
 					progressDialog.Hide();
 					searchView.ClearFocus();
+
 
 					listView.Adapter = new CustomerListAdapter(this, arrayPessoas);
 					if (status.code != 200) 
@@ -110,7 +116,9 @@ namespace CommercialLiteFinal.Droid
 
 			var t = new Thread(new ThreadStart(delegate
 			{				
-				var res = Request.GetInstance().Post<Pessoa>("person", "get", user.Token, new HttpParam("CdPessoa", code), new HttpParam("TpPessoa", "Cliente"), new HttpParam("get_person_cep", "1"));
+				var res = Request.GetInstance().Post<Pessoa>("person", "get", user.Token, new HttpParam("person_code", code), new HttpParam("get_person_address" +
+				                                                                                                                            "" +
+				                                                                                                                            "", "1"));
 					var pessoa = res.data;
 
 				RunOnUiThread(() =>

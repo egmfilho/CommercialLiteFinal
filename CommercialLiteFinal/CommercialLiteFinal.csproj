@@ -41,12 +41,17 @@
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Models\Loja.cs" />
     <Compile Include="Models\Vendedor.cs" />
-    <Compile Include="Models\Cep.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\Autenticacao.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Helper\Conversor.cs" />
     <Compile Include="Http\HttpResponse.cs" />
+    <Compile Include="Models\Preco.cs" />
+    <Compile Include="Models\EstoqueProduto.cs" />
+    <Compile Include="Models\Unidade.cs" />
+    <Compile Include="Models\Endereco.cs" />
+    <Compile Include="Models\Contato.cs" />
+    <Compile Include="Models\Sessao.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

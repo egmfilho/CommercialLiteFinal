@@ -26,7 +26,24 @@ namespace CommercialLiteFinal.Droid
 
 			FindViewById<ImageButton>(Resource.Id.imgBtnNovo).Click += (sender, e) => 
 			{
-				StartActivity(new Intent(this, typeof(OrderActivity)));	
+				var user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
+				var display = user.Lojas.Select<Loja, String>(loja => loja.ERP.Codigo + " - " + loja.ERP.Nome).ToList();
+				var lojasAdapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItemSingleChoice, display);
+
+				int shopIndex = 0;
+					
+				AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+				alerta.SetTitle("Informe a empresa");
+				alerta.SetSingleChoiceItems(lojasAdapter, shopIndex,(s, v) => {
+					shopIndex = v.Which;
+				});
+				alerta.SetPositiveButton("Cancelar", (s, v) => { });
+				alerta.SetNegativeButton("Confirmar", (s, v) =>
+				{
+					PreferenceManager.GetDefaultSharedPreferences(this).Edit().PutString("shop", Serializador.ToXML(user.Lojas[shopIndex])).Apply();
+					StartActivity(new Intent(this, typeof(OrderActivity)));	
+				});
+				alerta.Show();
 			};
 
 			FindViewById<ImageButton>(Resource.Id.imgBtnSalvos).Click += (sender, e) =>

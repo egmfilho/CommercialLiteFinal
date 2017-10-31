@@ -17,6 +17,7 @@ namespace CommercialLiteFinal
 
 #if DEBUG
 		public string debug { get; set; }
+		public string error { get; set; }
 #endif
 	}
 }

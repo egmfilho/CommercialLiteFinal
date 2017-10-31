@@ -5,6 +5,9 @@ namespace CommercialLiteFinal
 	{
 		public static string ToXML<T>(T obj)
 		{
+			if (obj == null)
+				return String.Empty;
+			
 			var stringwriter = new System.IO.StringWriter();
 			var serializer = new System.Xml.Serialization.XmlSerializer(obj.GetType());
 			serializer.Serialize(stringwriter, obj);

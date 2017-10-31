@@ -36,7 +36,7 @@ namespace CommercialLiteFinal.Droid
 						ISharedPreferencesEditor editor = prefs.Edit();
 						var user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
 						editor.Remove("user");
-						editor.PutString("user", Serializador.ToXML(new Usuario { UserName = user.UserName }));
+						editor.PutString("user", Serializador.ToXML(new Usuario { Nome = user.Nome }));
 						editor.Commit();
 						var intent = new Intent(this, typeof(LoginActivity));
 						intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
