@@ -27,7 +27,7 @@ namespace CommercialLiteFinal.Droid
 			user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
 			shop = Serializador.LoadFromXMLString<Loja>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("shop", ""));
 
-			pedido = new Pedido(user.Id, user.Vendedor.Id, shop.Id);
+			pedido = new Pedido(user.Id, user.Vendedor.Id, shop.ERP.Codigo);
 
 			// Create your application here
 			SetContentView(Resource.Layout.Order);
@@ -64,12 +64,9 @@ namespace CommercialLiteFinal.Droid
 						return;
 
 					case Resource.Id.salvar_pedido:
-						Toast.MakeText(this, "Em breve", ToastLength.Short).Show();
-						return;
-
-					case Resource.Id.exportar_pedido:
 						Export();
 						return;
+
 					case Resource.Id.add_produto:
 						SearchProduct();
 						return;
@@ -102,15 +99,7 @@ namespace CommercialLiteFinal.Droid
 
 			FindViewById<Button>(Resource.Id.btnFinalizar).Click += (sender, e) =>
 			{
-				if (!Validate())
-					return;
-
-				AlertDialog.Builder alerta = new AlertDialog.Builder(this);
-				alerta.SetTitle("Finalizar");
-				alerta.SetMessage("Como deseja finalizar este orçamento?");
-				alerta.SetPositiveButton("Exportar", (s, v) => { Export(); });
-				alerta.SetNegativeButton("Salvar", (s, v) => { Toast.MakeText(this, "Em breve.", ToastLength.Short).Show(); });
-				alerta.Show();
+				Export();
 			};
 		}
 
@@ -197,6 +186,9 @@ namespace CommercialLiteFinal.Droid
 
 		public void Alert(string title, string message, string button)
 		{
+			if (!Validate())
+				return;
+			
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			alert.SetTitle(title);
 			alert.SetMessage(message);
@@ -295,6 +287,16 @@ namespace CommercialLiteFinal.Droid
 
 		private void Export()
 		{
+			AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+			alerta.SetTitle("Finalizar");
+			alerta.SetMessage("Deseja salvar o orçamento na base de dados do Commercial?");
+			alerta.SetPositiveButton("Salvar", (s, v) => { DoExport(); });
+			alerta.SetNegativeButton("Cancelar", (s, v) => { });
+			alerta.Show();
+		}
+
+		private void DoExport()
+		{
 			if (!Validate())
 				return;
 			
@@ -333,7 +335,7 @@ namespace CommercialLiteFinal.Droid
 						ClearScreen();
 						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 						alerta.SetTitle("Exportado");
-						var msg = string.Format("O orçamento foi exportado com sucesso! \nCódigo: {0:000000} \nErp: {1:000000}", res.data.Codigo, res.data.Erp);
+						var msg = string.Format("O orçamento foi exportado com sucesso! \nCódigo: {0:000000}", res.data.Codigo);
 						alerta.SetMessage(msg);
 						alerta.SetPositiveButton("Novo", (sender, e) => { });
 						alerta.SetNegativeButton("Início", (sender, e) => 
@@ -347,7 +349,6 @@ namespace CommercialLiteFinal.Droid
 						Toast.MakeText(this, res.status.description, ToastLength.Short).Show();
 					}
 
-					Toast.MakeText(this, "Orçamento exportado!", ToastLength.Short).Show();
 				});
 			}));
 			t.Start();

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main"
+    android:background="@drawable/login_background"
     android:theme="@style/Tema.Commercial.Escuro"
     android:minWidth="25px"
     android:minHeight="25px">
@@ -31,7 +31,10 @@
             android:hint="Nome de usuário"
             android:gravity="center"
             android:padding="10dp"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            android:textColor="#ffffffff"
+            android:textColorHint="#dddddddd"
+            android:background="#33ffffff" />
         <EditText
             android:inputType="textPassword"
             android:layout_width="match_parent"
@@ -40,7 +43,10 @@
             android:hint="Senha"
             android:gravity="center"
             android:layout_margin="10dp"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textColor="#ffffffff"
+            android:textColorHint="#dddddddd"
+            android:background="#33ffffff" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"

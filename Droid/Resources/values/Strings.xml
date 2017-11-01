@@ -8,7 +8,7 @@
 	<string name="product_search_placeholder">Código ou descrição</string>
 	<string name="customer_search_placeholder">Nome ou código</string>
 	<string name="customer_search_title">Buscar cliente</string>
-	<string name="export_list_title">Exportados</string>
+	<string name="export_list_title">Lista de orçamentos</string>
 	<string name="search">Buscar</string>
 	<string name="scan">Escanear</string>
 	<string name="add">Adicionar</string>
@@ -40,4 +40,5 @@
 	<string name="locked_device">Aparelho bloqueado</string>
 	<string name="locked_message">Este aparelho ainda não foi liberado para uso do Commercial Lite.</string>
 	<string name="view_prices">Ver preços</string>
+	<string name="view_orders">Ver orçamentos</string>
 </resources>

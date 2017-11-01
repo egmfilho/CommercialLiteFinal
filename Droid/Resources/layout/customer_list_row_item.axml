@@ -28,7 +28,8 @@
             p1:id="@+id/lblNome"
             p1:layout_gravity="center_vertical"
             style="@style/Text.Primary"
-            p1:layout_marginLeft="5dp" />
+            p1:layout_marginLeft="5dp"
+            p1:textColor="@color/secondary" />
         <TextView
             p1:text="Small Text"
             p1:textAppearance="?android:attr/textAppearanceSmall"

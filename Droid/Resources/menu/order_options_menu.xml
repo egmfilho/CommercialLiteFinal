@@ -4,6 +4,5 @@
 	<item android:id="@+id/novo_pedido" android:title="@string/new_" android:showAsAction="always" />
 	<item android:id="@+id/salvar_pedido" android:title="@string/save" android:showAsAction="ifRoom" />	
     <item android:id="@+id/add_produto" android:title="@string/add_product" android:showAsAction="ifRoom" />
-	<item android:id="@+id/exportar_pedido" android:title="@string/export" android:showAsAction="ifRoom" />	
 	<item android:id="@+id/logout" android:title="@string/logout" showAsAction="ifRoom" />
 </menu> 

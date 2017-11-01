@@ -32,6 +32,54 @@ namespace CommercialLiteFinal.Droid
 			user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
 
 			lista = FindViewById<ListView>(Resource.Id.listaExportados);
+			lista.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) => 
+			{
+				var progressDialog = ProgressDialog.Show(this, "Carregando", "Recebendo informações...", true);
+
+				var t = new Thread(new ThreadStart(delegate
+				{
+					var res = Request.GetInstance().Post<Pedido>("order", "get", user.Token, new HttpParam("order_code", array[e.Position].Codigo), new HttpParam("get_order_items", "1"), new HttpParam("get_order_items_product", "1"), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_price", "1"));
+
+					RunOnUiThread(() =>
+					{
+						if (res.status == null)
+						{
+#if DEBUG
+							progressDialog.Hide();
+							AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+							alerta.SetTitle("Debug");
+							alerta.SetMessage(res.debug);
+							alerta.SetPositiveButton("Fechar", (s, v) => { });
+							alerta.Show();
+							return;
+#else
+							Toast.MakeText(this, "Erro no servidor!", ToastLength.Long).Show();
+								return;
+#endif
+						}
+
+						if (res.status.code == 200)
+						{
+							progressDialog.Hide();
+							Intent intent = new Intent(this, typeof(OrderItemsActivity));
+							intent.PutExtra("itemList", Serializador.ToXML(res.data.Items));
+							intent.PutExtra("action", "viewOnly");
+							StartActivity(intent);
+						}
+						else if (res.status.code == 401)
+						{
+							progressDialog.Hide();
+							StartActivity(new Intent(this, typeof(LogoutActivity)));
+						}
+						else
+						{
+							progressDialog.Hide();
+							Toast.MakeText(this, res.status.description, ToastLength.Short).Show();
+						}
+					});
+				}));
+				t.Start();
+			};
 
 			Load();
 		}
@@ -41,7 +89,7 @@ namespace CommercialLiteFinal.Droid
 			var progressDialog = ProgressDialog.Show(this, "Carregando", "Buscando orçamentos...", true);
 			var t = new Thread(new ThreadStart(delegate
 			{				
-				var res = Request.GetInstance().Post<List<Pedido>>("order", "getList", user.Token, new HttpParam("order_user_id", user.Id.ToString()), new HttpParam("order_limit", "20"));
+				var res = Request.GetInstance().Post<List<Pedido>>("order", "getList", user.Token, new HttpParam("order_seller_id", user.Vendedor.Id), new HttpParam("order_limit", "20"));
 
 				RunOnUiThread(() =>
 				{					
@@ -50,6 +98,7 @@ namespace CommercialLiteFinal.Droid
 					if (res.status == null)
 					{
 #if DEBUG
+						progressDialog.Hide();
 						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 						alerta.SetTitle("Debug");
 						alerta.SetMessage(res.debug);
@@ -64,15 +113,18 @@ namespace CommercialLiteFinal.Droid
 
 					if (res.status.code == 200)
 					{
+						progressDialog.Hide();
 						array = new List<Pedido>(res.data);
 						lista.Adapter = new ExportListAdapter(this, array);
 					}
 					else if (res.status.code == 401)
 					{
+						progressDialog.Hide();
 						StartActivity(new Intent(this, typeof(LogoutActivity)));
 					}
 					else
 					{
+						progressDialog.Hide();
 						Toast.MakeText(this, res.status.description, ToastLength.Short).Show();
 					}
 				});

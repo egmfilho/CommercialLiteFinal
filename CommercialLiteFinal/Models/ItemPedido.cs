@@ -52,6 +52,7 @@ namespace CommercialLiteFinal
 			}
 		}
 
+		[JsonProperty("product")]
 		public Produto Produto { get; set; }
 
 		//public Auditoria Auditoria { get; set; }
@@ -105,5 +106,37 @@ namespace CommercialLiteFinal
 			var x = this.Produto.Precos.Find((Preco obj) => obj.Id == this.IdPreco);
 			return x;
 		}
+
+		[JsonProperty("order_item_value_unitary")]
+		public Decimal ValorUnitario
+		{
+			get
+			{
+				return GetTabelaDePreco().Valor;
+			}
+		}
+
+		[JsonProperty("order_item_stock")]
+		public float QtEstoque
+		{
+			get
+			{
+				return Produto.Estoque.Quantidade;	
+			}
+		}
+
+		[JsonProperty("order_item_value_icms")]
+		public Decimal ICMS
+		{
+			get;
+			set;
+		} = 0;
+
+		[JsonProperty("order_item_value_st")]
+		public Decimal ST
+		{
+			get;
+			set;
+		} = 0;
 	}
 }

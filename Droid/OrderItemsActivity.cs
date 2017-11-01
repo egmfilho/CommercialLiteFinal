@@ -23,6 +23,8 @@ namespace CommercialLiteFinal.Droid
 			// Create your application here
 			SetContentView(Resource.Layout.OrderItems);
 
+			var action = this.Intent.GetStringExtra("action");
+
 			var s = this.Intent.GetStringExtra("itemList");
 			if (!string.IsNullOrEmpty(s))
 			{
@@ -30,13 +32,17 @@ namespace CommercialLiteFinal.Droid
 
 				var listView = FindViewById<ListView>(Resource.Id.listaItens);
 				listView.Adapter = new ItemListAdapter(this, items);
-				listView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+
+				if (action != "viewOnly")
 				{
-					var intent = new Intent(this, typeof(ItemActivity));
-					intent.PutExtra("item", Serializador.ToXML(items[e.Position]));
-					intent.PutExtra("action", "update");
-					StartActivity(intent);
-				};
+					listView.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+					{
+						var intent = new Intent(this, typeof(ItemActivity));
+						intent.PutExtra("item", Serializador.ToXML(items[e.Position]));
+						intent.PutExtra("action", "update");
+						StartActivity(intent);
+					};
+				}
 			}
 
 		}

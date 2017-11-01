@@ -7,13 +7,13 @@ namespace CommercialLiteFinal
 	public class Pedido
 	{
 		[JsonProperty("order_id")]
-		public int Id { get; set; }
+		public String Id { get; set; }
 
 		[JsonProperty("order_code")]
-		public int Codigo { get; set; }
+		public String Codigo { get; set; }
 
 		[JsonProperty("order_code_erp")]
-		public int? Erp { get; set; }
+		public String Erp { get; set; }
 
 		[JsonProperty("order_user_id")]
 		public int IdUsuario { get; set; }
@@ -27,7 +27,7 @@ namespace CommercialLiteFinal
 		[JsonProperty("order_seller_id")]
 		public string IdVendedor { get; set; }
 
-		[JsonProperty("order_shop_id")]
+		[JsonProperty("order_company_id")]
 		public string IdLoja { get; set; }
 
 		[JsonProperty("order_price_id")]
@@ -40,6 +40,7 @@ namespace CommercialLiteFinal
 		public List<ItemPedido> Items { get; set; }
 
 		private Pessoa cliente;
+		[JsonProperty("order_client")]
 		public Pessoa Cliente 
 		{ 
 			get 
@@ -55,6 +56,7 @@ namespace CommercialLiteFinal
 		}
 
 		public Pessoa vendedor;
+		[JsonProperty("order_seller")]
 		public Pessoa Vendedor 
 		{ 
 			get
@@ -69,7 +71,20 @@ namespace CommercialLiteFinal
 			}
 		}
 
+		Decimal _valorTotal = 0;
 		[JsonProperty("order_value")]
+		public Decimal ValorTotalSalvo 
+		{ 
+			get
+			{
+				return _valorTotal == 0 ? ValorTotal : _valorTotal;
+			}
+			set 
+			{
+				_valorTotal = value;
+			}
+		}
+
 		public Decimal ValorTotal
 		{
 			get
@@ -83,7 +98,20 @@ namespace CommercialLiteFinal
 			}
 		}
 
+		Decimal _valorTotalComDesconto = 0;
 		[JsonProperty("order_value_total")]
+		public Decimal ValorTotalComDescontoSalvo
+		{
+			get
+			{
+				return _valorTotalComDesconto == 0 ? ValorTotalComDesconto : _valorTotalComDesconto;
+			}
+			set
+			{
+				_valorTotalComDesconto = value;
+			}
+		}
+
 		public Decimal ValorTotalComDesconto
 		{
 			get
@@ -120,9 +148,6 @@ namespace CommercialLiteFinal
 			}
 		}
 
-		public Decimal ValorSalvo { get; set; }
-		public Decimal ValorTotalSalvo { get; set; }
-
 		[JsonProperty("order_date")]
 		public DateTime Data { get; set; }
 
@@ -140,6 +165,20 @@ namespace CommercialLiteFinal
 				this.CdEntrega = value.Codigo;
 			}
 		}
+
+		[JsonProperty("order_value_st")]
+		public Decimal ST
+		{
+			get;
+			set;
+		} = 0;
+
+		[JsonProperty("order_value_icms")]
+		public Decimal ICMS
+		{
+			get;
+			set;
+		} = 0;
 
 		public Pedido(int idUsuario, string idVendedor, string idLoja)
 		{

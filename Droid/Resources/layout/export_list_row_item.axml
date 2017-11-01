@@ -17,23 +17,17 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lblErp"
-        android:textSize="16dp"
-        android:text="erp" />
+        android:id="@+id/lblData"
+        android:text="data"
+        android:textSize="14dp" />
     <TextView
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lblCliente"
-        android:textSize="20dp" />
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblData"
-        android:text="data"
-        android:textSize="14dp" />
+        android:textSize="20dp"
+        android:textColor="@color/secondary" />
     <TextView
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
@@ -42,4 +36,9 @@
         android:textSize="16dp"
         android:text="valor total"
         style="@style/Text.Primary" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblInfo"
+        android:text="info" />
 </LinearLayout>

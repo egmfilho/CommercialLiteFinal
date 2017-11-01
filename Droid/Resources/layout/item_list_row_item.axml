@@ -34,51 +34,51 @@
             p1:id="@+id/linearLayout4"
             p1:layout_margin="5dp">
             <TextView
-                p1:text="Small Text"
                 p1:textAppearance="?android:attr/textAppearanceSmall"
                 p1:layout_width="match_parent"
                 p1:layout_height="wrap_content"
                 p1:id="@+id/lblCodigo"
-                p1:textStyle="bold" />
+                p1:textStyle="bold"
+                p1:text="codigo" />
             <TextView
-                p1:text="Medium Text"
                 p1:textAppearance="?android:attr/textAppearanceMedium"
                 p1:layout_width="match_parent"
                 p1:layout_height="wrap_content"
                 p1:id="@+id/lblNome"
                 p1:layout_gravity="center_vertical"
                 style="@style/Text.Primary"
-                p1:textColor="@color/secondary" />
+                p1:textColor="@color/secondary"
+                p1:text="nome" />
             <TextView
-                p1:text="Small Text"
                 p1:textAppearance="?android:attr/textAppearanceSmall"
                 p1:layout_width="match_parent"
                 p1:layout_height="wrap_content"
                 p1:id="@+id/lblQtd"
-                p1:textSize="12dp" />
+                p1:textSize="12dp"
+                p1:text="quantidade" />
             <TextView
-                p1:text="Small Text"
                 p1:textAppearance="?android:attr/textAppearanceSmall"
                 p1:layout_width="match_parent"
                 p1:layout_height="wrap_content"
                 p1:id="@+id/lblPreco"
-                p1:textSize="12dp" />
+                p1:textSize="12dp"
+                p1:text="preco" />
             <TextView
-                p1:text="Small Text"
                 p1:textAppearance="?android:attr/textAppearanceSmall"
                 p1:layout_width="match_parent"
                 p1:layout_height="wrap_content"
                 p1:id="@+id/lblDesconto"
-                p1:textSize="12dp" />
+                p1:textSize="12dp"
+                p1:text="desconto" />
             <TextView
-                p1:text="Small Text"
                 p1:textAppearance="?android:attr/textAppearanceSmall"
                 p1:layout_width="wrap_content"
                 p1:layout_height="wrap_content"
                 p1:id="@+id/lblTotal"
                 p1:textSize="12dp"
                 p1:layout_gravity="center_vertical"
-                style="@style/Text.Primary" />
+                style="@style/Text.Primary"
+                p1:text="total" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

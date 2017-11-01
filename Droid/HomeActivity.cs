@@ -24,7 +24,7 @@ namespace CommercialLiteFinal.Droid
 			// Create your application here
 			SetContentView(Resource.Layout.Home);
 
-			FindViewById<ImageButton>(Resource.Id.imgBtnNovo).Click += (sender, e) => 
+			FindViewById<Button>(Resource.Id.btnNovo).Click += (sender, e) => 
 			{
 				var user = Serializador.LoadFromXMLString<Usuario>(PreferenceManager.GetDefaultSharedPreferences(this).GetString("user", ""));
 				var display = user.Lojas.Select<Loja, String>(loja => loja.ERP.Codigo + " - " + loja.ERP.Nome).ToList();
@@ -46,17 +46,12 @@ namespace CommercialLiteFinal.Droid
 				alerta.Show();
 			};
 
-			FindViewById<ImageButton>(Resource.Id.imgBtnSalvos).Click += (sender, e) =>
-			{
-				Toast.MakeText(this, "Em breve", ToastLength.Short).Show();
-			};
-
-			FindViewById<ImageButton>(Resource.Id.imgBtnExportados).Click += (sender, e) =>
+			FindViewById<Button>(Resource.Id.btnSalvos).Click += (sender, e) =>
 			{
 				StartActivity(new Intent(this, typeof(ExportListActivity)));
 			};
 
-			FindViewById<ImageButton>(Resource.Id.imgBtnSair).Click += (sender, e) =>
+			FindViewById<Button>(Resource.Id.btnSair).Click += (sender, e) =>
 			{
 				AlertDialog.Builder alert = new AlertDialog.Builder(this);
 				alert.SetTitle("Sair");
@@ -70,7 +65,7 @@ namespace CommercialLiteFinal.Droid
 			};
 
 			FindViewById<TextView>(Resource.Id.lblVendedor).Text = PreferenceManager.GetDefaultSharedPreferences(this).GetString("employeeName", "");
-			FindViewById<TextView>(Resource.Id.lblVersao).Text = "versão 1.0.4";
+			FindViewById<TextView>(Resource.Id.lblVersao).Text = "versão 1.2";
 			if (Request.GetInstance().Uri.Equals(Database.Teste))
 				FindViewById<TextView>(Resource.Id.lblVersao).Text += " BASE TESTE";
 		}

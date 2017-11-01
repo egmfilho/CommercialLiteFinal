@@ -46,12 +46,13 @@ namespace CommercialLiteFinal.Droid
 			var view = context.LayoutInflater.Inflate(Resource.Layout.export_list_row_item, null);
 
 			view.FindViewById<TextView>(Resource.Id.lblCodigo).Text = string.Format("Código: {0:000000}", item.Codigo);
-			view.FindViewById<TextView>(Resource.Id.lblErp).Text = string.Format("Erp: {0:000000}", item.Erp);
 			view.FindViewById<TextView>(Resource.Id.lblCliente).Text = string.Format(item.Cliente.Nome);
 			string data = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:f}", item.Data);
 			view.FindViewById<TextView>(Resource.Id.lblData).Text = data;
-			string total = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor total: {0:C}", item.ValorTotalSalvo);
+			string total = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "Valor total: {0:C}", item.ValorTotalComDescontoSalvo);
 			view.FindViewById<TextView>(Resource.Id.lblTotal).Text = total;
+			string info = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "ICMS: {0:C} | Subist. Tributária: {1:C}", item.ICMS, item.ST);
+			view.FindViewById<TextView>(Resource.Id.lblInfo).Text = info;
 
 			return view;
 		}
