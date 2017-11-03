@@ -94,19 +94,21 @@ namespace CommercialLiteFinal.Droid
 				long codigo;
 				if (long.TryParse(query, out codigo))
 				{
-					Response<Produto> response = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("product_code", query), new HttpParam("company_id", shop.ERP.Codigo), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_stock", "1"), new HttpParam("get_product_price", "1"));
+					var response = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("product_code", query), new HttpParam("company_id", shop.ERP.Codigo), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_stock", "1"), new HttpParam("get_product_price", "1"));
 					array = response.data != null ? new List<Produto>(new Produto[] { response.data }) : new List<Produto>();
 					res = (HttpResponse)response;
 				}
 				else
 				{
-					Response<List<Produto>> response = Request.GetInstance().Post<List<Produto>>("product", "getList", user.Token, new HttpParam("product_name", query), new HttpParam("company_id", shop.ERP.Codigo), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_stock", "1"), new HttpParam("get_product_price", "1"));
+					var response = Request.GetInstance().Post<List<Produto>>("product", "getList", user.Token, new HttpParam("product_name", query), new HttpParam("company_id", shop.ERP.Codigo), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_stock", "1"), new HttpParam("get_product_price", "1"));
 					array = response.data != null ? new List<Produto>(response.data) : new List<Produto>();
 					res = (HttpResponse)response;
 				}
 
 				RunOnUiThread(() =>
 				{
+					progressDialog.Hide();
+
 					if (res.status == null)
 					{
 #if DEBUG
@@ -135,7 +137,6 @@ namespace CommercialLiteFinal.Droid
 						Toast.MakeText(this, res.status.description, ToastLength.Short).Show();
 					}
 
-					progressDialog.Hide();
 					searchView.ClearFocus();
 					listView.Adapter = new ProductListAdapter(this, arrayProdutos);
 				});

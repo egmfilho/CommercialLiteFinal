@@ -189,6 +189,7 @@ namespace CommercialLiteFinal.Droid
 							var shopCode = this.Intent.GetStringExtra("shopCode");
 							var res = Request.GetInstance().Post<Produto>("product", "get", user.Token, new HttpParam("product_code", c), new HttpParam("company_id", shopCode), new HttpParam("get_product_unit", "1"), new HttpParam("get_product_stock", "1"), new HttpParam("get_product_price", "1"));
 
+
 							if (res.status == null)
 							{
 #if DEBUG

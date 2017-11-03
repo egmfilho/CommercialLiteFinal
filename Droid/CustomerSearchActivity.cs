@@ -74,12 +74,15 @@ namespace CommercialLiteFinal.Droid
 				{
 					var res = Request.GetInstance().Post<Pessoa>("person", "get", user.Token, new HttpParam("person_code", query));
 					status = res.status;
+
 					if (status.code == 401)
+					{
+						progressDialog.Hide();
 						StartActivity(new Intent(this, typeof(LogoutActivity)));
+					}
 					else if (status.code == 200)
 					{
 						arrayPessoas.Add(res.data);
-						System.Diagnostics.Debug.WriteLine("[#] " + res.data.Nome);
 					}
 
 				}
@@ -88,16 +91,20 @@ namespace CommercialLiteFinal.Droid
 					var res = Request.GetInstance().Post<List<Pessoa>>("person", "getList", user.Token, new HttpParam("person_name", query));
 					status = res.status;
 					if (status.code == 401)
+					{
+						progressDialog.Hide();
 						StartActivity(new Intent(this, typeof(LogoutActivity)));
+					}
 					else if (status.code == 200)
+					{
 						arrayPessoas = res.data;
+					}
 				}
 
 				RunOnUiThread(() =>
 				{
 					progressDialog.Hide();
 					searchView.ClearFocus();
-
 
 					listView.Adapter = new CustomerListAdapter(this, arrayPessoas);
 					if (status.code != 200) 

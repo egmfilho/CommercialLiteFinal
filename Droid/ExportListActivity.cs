@@ -42,10 +42,11 @@ namespace CommercialLiteFinal.Droid
 
 					RunOnUiThread(() =>
 					{
+						progressDialog.Hide();
+
 						if (res.status == null)
 						{
 #if DEBUG
-							progressDialog.Hide();
 							AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 							alerta.SetTitle("Debug");
 							alerta.SetMessage(res.debug);
@@ -60,7 +61,6 @@ namespace CommercialLiteFinal.Droid
 
 						if (res.status.code == 200)
 						{
-							progressDialog.Hide();
 							Intent intent = new Intent(this, typeof(OrderItemsActivity));
 							intent.PutExtra("itemList", Serializador.ToXML(res.data.Items));
 							intent.PutExtra("action", "viewOnly");
@@ -68,12 +68,10 @@ namespace CommercialLiteFinal.Droid
 						}
 						else if (res.status.code == 401)
 						{
-							progressDialog.Hide();
 							StartActivity(new Intent(this, typeof(LogoutActivity)));
 						}
 						else
 						{
-							progressDialog.Hide();
 							Toast.MakeText(this, res.status.description, ToastLength.Short).Show();
 						}
 					});
@@ -87,6 +85,7 @@ namespace CommercialLiteFinal.Droid
 		private void Load()
 		{
 			var progressDialog = ProgressDialog.Show(this, "Carregando", "Buscando orçamentos...", true);
+
 			var t = new Thread(new ThreadStart(delegate
 			{				
 				var res = Request.GetInstance().Post<List<Pedido>>("order", "getList", user.Token, new HttpParam("order_seller_id", user.Vendedor.Id), new HttpParam("order_limit", "20"));
@@ -98,7 +97,6 @@ namespace CommercialLiteFinal.Droid
 					if (res.status == null)
 					{
 #if DEBUG
-						progressDialog.Hide();
 						AlertDialog.Builder alerta = new AlertDialog.Builder(this);
 						alerta.SetTitle("Debug");
 						alerta.SetMessage(res.debug);
@@ -113,18 +111,15 @@ namespace CommercialLiteFinal.Droid
 
 					if (res.status.code == 200)
 					{
-						progressDialog.Hide();
 						array = new List<Pedido>(res.data);
 						lista.Adapter = new ExportListAdapter(this, array);
 					}
 					else if (res.status.code == 401)
 					{
-						progressDialog.Hide();
 						StartActivity(new Intent(this, typeof(LogoutActivity)));
 					}
 					else
 					{
-						progressDialog.Hide();
 						Toast.MakeText(this, res.status.description, ToastLength.Short).Show();
 					}
 				});

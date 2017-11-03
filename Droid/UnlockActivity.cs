@@ -118,6 +118,8 @@ namespace CommercialLiteFinal.Droid
 				var res = Request.GetInstance().Post<Autenticacao>("authentication", "register", "", data);
 				RunOnUiThread(() =>
 				{
+					progressDialog.Hide();
+
 					if (res.status == null)
 					{
 #if DEBUG
@@ -133,8 +135,6 @@ namespace CommercialLiteFinal.Droid
 #endif
 					}
 
-
-					progressDialog.Hide();
 					if (res.status.code == 200)
 					{
 						var editor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
